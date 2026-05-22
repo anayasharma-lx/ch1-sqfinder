@@ -5,151 +5,234 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Square Root Finder — Ganita Prakash Grade 8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:#d8d4cc;
-  --text:#1a1814;--text2:#5a5650;--text3:#9a958e;
-  --blue:#2c5f9e;--red:#c0392b;--green:#1a7a4a;--orange:#e08020;
-  --font:'DM Sans',-apple-system,sans-serif;--mono:'DM Mono',ui-monospace,monospace;
+  --paper:  #faf8f4;
+  --paper2: #f3f0ea;
+  --paper3: #e8e3d8;
+  --ink:    #1c1a16;
+  --ink2:   #4a4640;
+  --ink3:   #8a8580;
+  --rule:   #d4cfc5;
+
+  --teal:   #1d6a72;
+  --teal2:  #2a8a94;
+  --teal-bg:#e8f4f5;
+  --rust:   #b84a2a;
+  --rust-bg:#fdf0ec;
+  --gold:   #c08030;
+  --gold-bg:#fdf5e8;
+  --sage:   #3a6a48;
+  --sage-bg:#eaf2ec;
+  --violet: #6a4a90;
+  --violet-bg:#f2eef8;
+
+  --font:  'DM Sans', sans-serif;
+  --serif: 'Lora', Georgia, serif;
+  --mono:  'DM Mono', ui-monospace, monospace;
+  --shadow:0 2px 12px rgba(28,26,22,.08);
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);
-  min-height:100vh;-webkit-font-smoothing:antialiased;padding:24px 16px;line-height:1.5}
+
+body{
+  font-family:var(--font);background:var(--paper);color:var(--ink);
+  min-height:100vh;-webkit-font-smoothing:antialiased;
+  padding:32px 20px 60px;line-height:1.6;
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(192,128,48,.04) 0,transparent 50%),
+    radial-gradient(circle at 80% 70%,rgba(29,106,114,.04) 0,transparent 50%);
+}
 .app{max-width:900px;margin:0 auto}
 
-.head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.head-ic{width:42px;height:42px;border-radius:10px;background:var(--surface2);
-  border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-weight:600;color:var(--text2);font-size:16px;flex-shrink:0}
-.lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:2px}
-.title{font-size:22px;font-weight:700;line-height:1.2}
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+/* ── HEADER ─────────────────────────────────────────── */
+.header{margin-bottom:28px;border-bottom:1.5px solid var(--rule);padding-bottom:20px}
+.chapter-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--paper2);border:1.5px solid var(--rule);
+  border-radius:20px;padding:4px 14px 4px 10px;
+  font-size:11px;font-weight:600;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:12px
+}
+.badge-num{
+  width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;
+  font-size:12px;font-weight:700;font-family:var(--mono);
+  display:flex;align-items:center;justify-content:center
+}
+h1{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2}
+.header-sub{font-size:14px;color:var(--ink2);margin-top:6px;max-width:540px;line-height:1.55}
 
-/* Number input */
-.input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-.num-input{padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;
-  font-family:var(--mono);font-size:22px;font-weight:700;background:var(--surface);
-  color:var(--text);outline:none;width:160px;text-align:center;transition:border-color .15s}
-.num-input:focus{border-color:var(--blue)}
-.go-btn{padding:10px 20px;border:1.5px solid var(--blue);border-radius:8px;
-  background:var(--blue);color:#fff;font-family:var(--font);font-size:14px;
-  font-weight:700;cursor:pointer;transition:all .12s}
-.go-btn:hover{background:#1d4d85}
-.presets{display:flex;gap:6px;flex-wrap:wrap}
-.preset{padding:5px 11px;border:1.5px solid var(--border);border-radius:7px;
-  font-family:var(--mono);font-size:12px;color:var(--text2);cursor:pointer;
-  background:var(--surface);transition:all .12s;font-weight:600}
-.preset:hover{border-color:var(--blue);color:var(--blue)}
+/* ── CARD ────────────────────────────────────────────── */
+.card{
+  background:var(--paper);border:1.5px solid var(--rule);
+  border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)
+}
 
-/* Tabs */
-.tabs{display:flex;gap:4px;background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:10px;padding:4px;margin-bottom:20px}
-.tab{flex:1;padding:9px 8px;border:none;background:transparent;border-radius:7px;
-  font-family:var(--font);font-size:13px;font-weight:600;color:var(--text2);
-  cursor:pointer;transition:all .15s;text-align:center}
-.tab.active{background:var(--surface);color:var(--text);
-  box-shadow:0 1px 3px rgba(0,0,0,.08);border:1.5px solid var(--border)}
+/* ── NUMBER INPUT ROW ────────────────────────────────── */
+.input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.num-input{
+  padding:10px 14px;border:1.5px solid var(--rule);border-radius:9px;
+  font-family:var(--mono);font-size:22px;font-weight:700;
+  background:#fff;color:var(--ink);outline:none;width:160px;
+  text-align:center;transition:border-color .15s
+}
+.num-input:focus{border-color:var(--teal)}
+.go-btn{
+  padding:10px 22px;border:none;border-radius:9px;
+  background:var(--teal);color:#fff;font-family:var(--font);
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .14s;letter-spacing:.2px
+}
+.go-btn:hover{background:#155a62}
+.presets{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.preset-lbl{font-size:12px;color:var(--ink3);font-weight:600}
+.preset{
+  padding:5px 12px;border:1.5px solid var(--rule);border-radius:20px;
+  font-family:var(--mono);font-size:12px;color:var(--ink2);cursor:pointer;
+  background:var(--paper);transition:all .12s;font-weight:600
+}
+.preset:hover{border-color:var(--teal);color:var(--teal)}
 
+/* ── TABS ────────────────────────────────────────────── */
+.tabs{
+  display:flex;gap:3px;background:var(--paper2);border:1.5px solid var(--rule);
+  border-radius:12px;padding:4px;margin-bottom:22px
+}
+.tab{
+  flex:1;padding:10px 10px;border:none;background:transparent;
+  border-radius:9px;font-family:var(--font);font-size:13px;font-weight:600;
+  color:var(--ink3);cursor:pointer;transition:all .18s;text-align:center
+}
+.tab:hover{color:var(--ink2)}
+.tab.active{
+  background:#fff;color:var(--ink);
+  box-shadow:0 1px 4px rgba(28,26,22,.10);border:1.5px solid var(--rule)
+}
 .view{display:none}
 .view.active{display:block}
 
-/* ══ PAIR TAB ══════════════════════════════════════════════ */
-.pair-intro{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6}
-.pair-intro strong{color:var(--text)}
+/* ── CONCEPT BANNER ──────────────────────────────────── */
+.concept{
+  background:var(--gold-bg);border-left:3px solid var(--gold);
+  border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:20px;
+  font-family:var(--serif);font-style:italic;font-size:14px;
+  color:#4a3010;line-height:1.65
+}
+.concept strong{font-style:normal;font-weight:700;color:#3a2008}
 
-/* Stage: canvas for drag interaction */
-.pair-stage-wrap{position:relative;background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:12px;overflow:hidden;margin-bottom:14px;min-height:320px}
+/* ── PAIR TAB ────────────────────────────────────────── */
+.pair-stage-wrap{
+  position:relative;background:var(--paper2);border:1.5px solid var(--rule);
+  border-radius:12px;overflow:hidden;margin-bottom:14px
+}
 #pair-canvas{display:block;width:100%;cursor:default;touch-action:none}
 
-/* Instruction banner */
-.pair-banner{position:absolute;top:10px;left:50%;transform:translateX(-50%);
+.pair-banner{
+  position:absolute;top:10px;left:50%;transform:translateX(-50%);
   font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-  color:var(--text3);background:rgba(245,244,240,.9);padding:4px 12px;border-radius:6px;
-  pointer-events:none;white-space:nowrap}
+  color:var(--ink3);background:rgba(250,248,244,.92);
+  padding:4px 14px;border-radius:20px;pointer-events:none;
+  white-space:nowrap;border:1px solid var(--rule)
+}
+
+/* Root row */
+.root-row{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  padding:12px 16px;background:var(--paper2);
+  border:1.5px solid var(--rule);border-radius:10px;
+  font-family:var(--mono);font-size:14px;font-weight:600;
+  min-height:54px;margin-bottom:12px
+}
+.root-bubble{
+  width:38px;height:38px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0
+}
+.root-times{color:var(--ink3);font-size:16px}
+.root-eq{color:var(--ink3)}
+.root-ans{font-size:22px;font-weight:800;color:var(--teal)}
+.root-label{font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 
 /* Result strip */
-.result-strip{padding:14px 18px;border-radius:10px;border:1.5px solid;text-align:center;
-  margin-bottom:12px;transition:all .3s}
-.result-strip.success{background:#f0f7f3;border-color:#b5d9c5;color:var(--green)}
-.result-strip.fail{background:#fff0f0;border-color:#f0c5c5;color:var(--red)}
-.result-strip.pending{background:var(--surface2);border-color:var(--border);color:var(--text3)}
-.rs-val{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1.2}
-.rs-sub{font-size:12px;font-weight:600;margin-top:4px}
+.result-strip{
+  padding:16px 18px;border-radius:10px;border:1.5px solid;
+  text-align:center;margin-bottom:12px;transition:all .3s
+}
+.result-strip.pending{background:var(--paper2);border-color:var(--rule);color:var(--ink3)}
+.result-strip.success{background:var(--sage-bg);border-color:#8abcaa;color:var(--sage)}
+.result-strip.fail   {background:var(--rust-bg);border-color:#e0a898;color:var(--rust)}
+.rs-val{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1.2}
+.rs-sub{font-size:12px;font-weight:600;margin-top:5px;font-family:var(--mono)}
 
-.reset-btn{padding:7px 16px;border:1.5px solid var(--border);border-radius:7px;
-  background:var(--surface);font-family:var(--font);font-size:13px;font-weight:600;
-  color:var(--text2);cursor:pointer;margin-bottom:12px;transition:all .12s}
-.reset-btn:hover{border-color:var(--text3);color:var(--text)}
+.reset-btn{
+  padding:7px 16px;border:1.5px solid var(--rule);border-radius:20px;
+  background:var(--paper);font-family:var(--font);font-size:13px;
+  font-weight:600;color:var(--ink3);cursor:pointer;margin-bottom:14px;
+  transition:all .12s
+}
+.reset-btn:hover{border-color:var(--ink3);color:var(--ink)}
 
-/* Root row — paired bubbles collapse to */
-.root-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 14px;
-  background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;
-  font-family:var(--mono);font-size:14px;font-weight:600;min-height:50px}
-.root-bubble{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
-.root-times{color:var(--text3);font-size:16px}
-.root-eq{color:var(--text3)}
-.root-ans{font-size:20px;font-weight:800;color:var(--blue)}
-.root-label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-
-/* ══ SQUEEZE TAB ══════════════════════════════════════════ */
-.squeeze-intro{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6}
-.squeeze-intro strong{color:var(--text)}
-
-.squeeze-stage{background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:12px;padding:20px;margin-bottom:14px}
-
-#squeeze-canvas{display:block;width:100%;margin-bottom:16px}
+/* ── SQUEEZE TAB ─────────────────────────────────────── */
+.squeeze-stage{
+  background:var(--paper2);border:1.5px solid var(--rule);
+  border-radius:12px;padding:20px;margin-bottom:16px
+}
+#squeeze-canvas{display:block;width:100%;margin-bottom:18px}
 
 .squeeze-sliders{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:540px){.squeeze-sliders{grid-template-columns:1fr}}
+@media(max-width:520px){.squeeze-sliders{grid-template-columns:1fr}}
 
-.slider-group{padding:14px;border-radius:9px;border:1.5px solid}
-.slider-group.lo-group{background:#2c5f9e08;border-color:#9ab4dc}
-.slider-group.hi-group{background:#c0392b08;border-color:#f0a8a0}
-.sg-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.lo-group .sg-label{color:var(--blue)}
-.hi-group .sg-label{color:var(--red)}
-.sg-val{font-family:var(--mono);font-size:24px;font-weight:800;margin-bottom:4px}
-.lo-group .sg-val{color:var(--blue)}
-.hi-group .sg-val{color:var(--red)}
-.sg-sq{font-family:var(--mono);font-size:12px;color:var(--text3);margin-bottom:8px}
-.sg-slider{width:100%;accent-color:var(--blue);height:5px}
-.lo-group .sg-slider{accent-color:var(--blue)}
-.hi-group .sg-slider{accent-color:var(--red)}
+.slider-group{padding:14px;border-radius:10px;border:1.5px solid}
+.lo-group{background:var(--teal-bg);border-color:var(--teal2)}
+.hi-group{background:var(--rust-bg);border-color:#e0a898}
+.sg-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.lo-group .sg-label{color:var(--teal)}
+.hi-group .sg-label{color:var(--rust)}
+.sg-val{font-family:var(--mono);font-size:26px;font-weight:800;margin-bottom:4px;line-height:1.1}
+.lo-group .sg-val{color:var(--teal)}
+.hi-group .sg-val{color:var(--rust)}
+.sg-sq{font-family:var(--mono);font-size:12px;color:var(--ink3);margin-bottom:10px}
+.sg-slider{width:100%;height:5px}
+.lo-group .sg-slider{accent-color:var(--teal)}
+.hi-group .sg-slider{accent-color:var(--rust)}
 
-.squeeze-result{padding:14px 18px;border-radius:10px;text-align:center;
-  border:1.5px solid;margin-bottom:12px;transition:all .3s}
-.squeeze-result.wide{background:var(--surface2);border-color:var(--border);color:var(--text2)}
-.squeeze-result.close{background:#fff8f0;border-color:#f0d8c0;color:#6b4400}
-.squeeze-result.exact{background:#f0f7f3;border-color:#b5d9c5;color:var(--green)}
-.sr-main{font-family:var(--mono);font-size:20px;font-weight:700}
-.sr-sub{font-size:12px;margin-top:4px;font-weight:600}
+.squeeze-result{
+  padding:14px 18px;border-radius:10px;text-align:center;
+  border:1.5px solid;transition:all .3s
+}
+.squeeze-result.wide {background:var(--paper2);border-color:var(--rule);color:var(--ink2)}
+.squeeze-result.close{background:var(--gold-bg);border-color:#e0c080;color:#6b4400}
+.squeeze-result.exact{background:var(--sage-bg);border-color:#8abcaa;color:var(--sage)}
+.sr-main{font-family:var(--mono);font-size:19px;font-weight:700}
+.sr-sub{font-size:12px;margin-top:5px;font-weight:600;font-family:var(--mono)}
 
-.insight{background:#fff8f0;border:1px solid #f0d8c0;border-left:3px solid var(--orange);
-  border-radius:0 8px 8px 0;padding:11px 14px;font-size:13px;color:#6b4400;line-height:1.65}
+/* ── INSIGHT ─────────────────────────────────────────── */
+.insight{
+  background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);
+  border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;
+  line-height:1.65;margin-top:4px
+}
 .insight strong{color:#4a2e00}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="head">
-    <div class="head-ic">1</div>
-    <div>
-      <div class="lbl">Chapter 1 · A Square and A Cube</div>
-      <div class="title">Square Root Finder</div>
+
+  <div class="header">
+    <div class="chapter-badge">
+      <div class="badge-num">1</div>
+      Chapter 1 · A Square and A Cube
     </div>
+    <h1>Square Root Finder</h1>
+    <p class="header-sub">Break any number into prime factors and pair them up — each pair contributes one factor to the square root. Or squeeze two bounds until they trap the root.</p>
   </div>
 
+  <!-- Number picker -->
   <div class="card">
     <div class="input-row">
       <input type="number" class="num-input" id="num-input" value="324" min="1" max="99999">
       <button class="go-btn" id="go-btn">Find √</button>
     </div>
     <div class="presets">
-      <span style="font-size:12px;color:var(--text3);font-weight:600;align-self:center">Try:</span>
+      <span class="preset-lbl">Try:</span>
       <button class="preset" data-n="576">576</button>
       <button class="preset" data-n="324">324</button>
       <button class="preset" data-n="441">441</button>
@@ -160,6 +243,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);
     </div>
   </div>
 
+  <!-- Tabs -->
   <div class="card">
     <div class="tabs">
       <button class="tab active" data-tab="pair">Drag to pair factors</button>
@@ -168,9 +252,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);
 
     <!-- ══ PAIR TAB ══ -->
     <div class="view active" id="view-pair">
-      <p class="pair-intro">
-        <strong>Drag any factor bubble onto another of the same number</strong> — they'll snap together into a pair. Each matched pair contributes one factor to the square root. Leftover bubbles turn red.
-      </p>
+      <div class="concept">
+        <strong>The pairing method:</strong> Every prime factor of a perfect square appears an <em>even</em> number of times. Drag matching bubbles onto each other — each pair that snaps together contributes one factor to the root. Any bubble left without a partner means the number is not a perfect square.
+      </div>
 
       <div class="pair-stage-wrap">
         <canvas id="pair-canvas"></canvas>
@@ -180,8 +264,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);
       <button class="reset-btn" id="reset-btn">Reset bubbles</button>
 
       <div class="root-row" id="root-row">
-        <span class="root-label">Root = </span>
-        <span style="color:var(--text3);font-family:var(--mono)">pair up factors to see...</span>
+        <span class="root-label">Root =</span>
+        <span style="color:var(--ink3);font-family:var(--mono);font-size:13px">pair up factors to see…</span>
       </div>
 
       <div class="result-strip pending" id="result-strip">
@@ -192,9 +276,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);
 
     <!-- ══ SQUEEZE TAB ══ -->
     <div class="view" id="view-squeeze">
-      <p class="squeeze-intro">
-        <strong>Squeeze the two bounds</strong> until they trap the square root. Drag the blue lower bound up and the red upper bound down. When lo+1 = hi, you've found which two consecutive integers the root lies between.
-      </p>
+      <div class="concept">
+        <strong>The squeezing method:</strong> We know √n lies between two consecutive whole numbers. Move the blue lower bound up and the red upper bound down — whenever lo² &lt; n &lt; hi², the root is trapped inside. When lo and hi are just 1 apart, you have found the exact position of √n on the number line.
+      </div>
 
       <div class="squeeze-stage">
         <canvas id="squeeze-canvas" height="100"></canvas>
@@ -214,34 +298,60 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);
         </div>
         <div class="squeeze-result wide" id="squeeze-result">
           <div class="sr-main" id="sr-main">1 ≤ √n ≤ 320</div>
-          <div class="sr-sub" id="sr-sub">Squeeze the bounds closer...</div>
+          <div class="sr-sub" id="sr-sub">Squeeze the bounds closer…</div>
         </div>
       </div>
 
       <div class="insight">
-        <strong>Why this works:</strong> Square roots are monotone — if a² &lt; n &lt; b², then a &lt; √n &lt; b. Narrowing the interval by checking whether the midpoint's square is too big or too small is exactly how computers calculate square roots (Newton's method).
+        <strong>Why this works:</strong> Square roots are monotone — if a² &lt; n &lt; b² then a &lt; √n &lt; b. Halving the gap each time (binary search) is exactly how calculators find square roots. Each squeeze step gives you one more decimal place of precision.
       </div>
     </div>
+
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// GLOBALS
-// ═══════════════════════════════════════════════════════
-const COLORS = ['#2c5f9e','#c0392b','#1a7a4a','#e08020','#7a5cb0','#0891b2','#db2777'];
+// ══════════════════════════════════════════════════════
+// PALETTE — matches CSS vars
+// ══════════════════════════════════════════════════════
+const BUBBLE_COLORS = [
+  '#1d6a72', // teal
+  '#b84a2a', // rust
+  '#c08030', // gold
+  '#3a6a48', // sage
+  '#6a4a90', // violet
+  '#2a5a8a', // ocean
+  '#a83060', // rose
+];
 
-let currentN = 324;
-let bubbles = [];      // {id, prime, color, x, y, paired, pairedWith, isRoot}
-let dragging = null;   // {bubbleId, offsetX, offsetY}
-let pairedGroups = []; // [{prime, color, bubbleIds}]
+// ══════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════
+let currentN   = 324;
+let bubbles    = [];
+let dragging   = null;
+let pairedGroups = [];
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('view-' + tab.dataset.tab).classList.add('active');
+    if (tab.dataset.tab === 'squeeze') initSqueeze();
+    if (tab.dataset.tab === 'pair')    initPair();
+  });
+});
+
+// ══════════════════════════════════════════════════════
 // NUMBER INPUT
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
 document.getElementById('go-btn').addEventListener('click', () => {
   const v = parseInt(document.getElementById('num-input').value);
-  if(v >= 1 && v <= 99999){ currentN = v; initPair(); initSqueeze(); }
+  if (v >= 1 && v <= 99999) { currentN = v; initPair(); initSqueeze(); }
 });
 document.querySelectorAll('.preset').forEach(b => {
   b.addEventListener('click', () => {
@@ -252,246 +362,195 @@ document.querySelectorAll('.preset').forEach(b => {
 });
 document.getElementById('reset-btn').addEventListener('click', () => initPair());
 
-// ═══════════════════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════════════════
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('view-' + tab.dataset.tab).classList.add('active');
-    if(tab.dataset.tab === 'squeeze') initSqueeze();
-    if(tab.dataset.tab === 'pair') { initPair(); }
-  });
-});
-
-// ═══════════════════════════════════════════════════════
-// PRIME FACTORIZATION
-// ═══════════════════════════════════════════════════════
-function primeFactors(n){
-  const f=[]; let d=2;
-  while(n>1){ while(n%d===0){f.push(d);n=Math.floor(n/d);} d++; }
+// ══════════════════════════════════════════════════════
+// PRIME FACTORISATION
+// ══════════════════════════════════════════════════════
+function primeFactors(n) {
+  const f = []; let d = 2;
+  while (n > 1) { while (n % d === 0) { f.push(d); n = Math.floor(n / d); } d++; }
   return f;
 }
 
-// ═══════════════════════════════════════════════════════
-// PAIR TAB — CANVAS DRAG INTERACTION
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+// PAIR TAB — canvas drag
+// ══════════════════════════════════════════════════════
 const pairCanvas = document.getElementById('pair-canvas');
-const pctx = pairCanvas.getContext('2d');
-const PR = window.devicePixelRatio || 1;
-const BUBBLE_R = 26;
-const SNAP_DIST = 70;
+const pctx       = pairCanvas.getContext('2d');
+const PR         = Math.min(window.devicePixelRatio || 1, 2);
+const BUBBLE_R   = 26;
+const SNAP_DIST  = 72;
 
-function resizePairCanvas(){
+function resizePairCanvas(targetH) {
   const wrap = pairCanvas.parentElement;
-  const w = wrap.clientWidth;
-  const h = Math.max(320, Math.min(500, wrap.clientHeight || 320));
-  pairCanvas.style.width = w + 'px';
+  const w    = wrap.clientWidth;
+  // targetH is computed from bubble layout; fall back to 160 minimum
+  const h    = targetH || 160;
+  pairCanvas.style.width  = w + 'px';
   pairCanvas.style.height = h + 'px';
-  pairCanvas.width = w * PR;
-  pairCanvas.height = h * PR;
+  pairCanvas.width        = w * PR;
+  pairCanvas.height       = h * PR;
+  pctx.resetTransform();
   pctx.scale(PR, PR);
   drawPair();
 }
 
-function initPair(){
+function initPair() {
   const factors = primeFactors(currentN);
-  const counts = {};
-  factors.forEach(f => counts[f] = (counts[f]||0)+1);
-  const primes = Object.keys(counts).map(Number).sort((a,b)=>a-b);
+  const counts  = {};
+  factors.forEach(f => counts[f] = (counts[f] || 0) + 1);
+  const primes  = Object.keys(counts).map(Number).sort((a, b) => a - b);
 
-  bubbles = [];
+  bubbles      = [];
   pairedGroups = [];
-  dragging = null;
+  dragging     = null;
 
-  // Layout bubbles in rows
-  const wrap = pairCanvas.parentElement;
-  const W = wrap.clientWidth || 600;
-  const H = parseInt(pairCanvas.style.height) || 320;
-  const totalBubbles = factors.length;
-  const cols = Math.min(totalBubbles, Math.floor((W-40) / (BUBBLE_R*2 + 14)));
-  const startX = 40 + BUBBLE_R;
-  const startY = 50 + BUBBLE_R;
-  const gapX = (W - 40 - BUBBLE_R*2 - startX) / Math.max(cols-1, 1);
-  const gapY = BUBBLE_R*2 + 18;
+  const wrap   = pairCanvas.parentElement;
+  const W      = wrap.clientWidth || 600;
+  const GAP_X  = BUBBLE_R * 2 + 16;   // horizontal spacing
+  const GAP_Y  = BUBBLE_R * 2 + 22;   // vertical spacing
+  const PAD_X  = 32;                   // left padding
+  const PAD_Y  = 48;                   // top padding
+  const PAD_BOT = 28;                  // bottom padding
 
-  let idx = 0;
-  let colorIdx = 0;
+  // How many bubbles fit per row?
+  const cols = Math.max(1, Math.min(factors.length, Math.floor((W - PAD_X * 2) / GAP_X)));
+
+  let idx = 0, colorIdx = 0;
   primes.forEach(p => {
-    const c = COLORS[colorIdx % COLORS.length];
-    for(let k=0; k<counts[p]; k++){
+    const c = BUBBLE_COLORS[colorIdx % BUBBLE_COLORS.length];
+    for (let k = 0; k < counts[p]; k++) {
       const col = idx % cols;
       const row = Math.floor(idx / cols);
       bubbles.push({
-        id: idx,
-        prime: p,
-        color: c,
-        x: startX + col * (BUBBLE_R*2 + 16),
-        y: startY + row * gapY,
-        paired: false,
-        pairedWith: null,
-        shake: 0,
+        id: idx, prime: p, color: c,
+        x: PAD_X + BUBBLE_R + col * GAP_X,
+        y: PAD_Y + BUBBLE_R + row * GAP_Y,
+        paired: false, pairedWith: null,
+        shake: 0, unpairable: false,
       });
       idx++;
     }
     colorIdx++;
   });
 
+  // Height = exactly what the layout needs, nothing more
+  const numRows  = Math.ceil(factors.length / cols);
+  const neededH  = PAD_Y + numRows * GAP_Y + PAD_BOT;
+
   updateResultStrip();
-  resizePairCanvas();
+  resizePairCanvas(neededH);
 }
 
-function drawPair(){
+function drawPair() {
   const W = pairCanvas.clientWidth;
   const H = pairCanvas.clientHeight;
   pctx.clearRect(0, 0, W, H);
 
   // Background
-  pctx.fillStyle = '#f0ede8';
+  pctx.fillStyle = '#f3f0ea';
   pctx.fillRect(0, 0, W, H);
 
-  // Draw connection lines for pairs
-  pairedGroups.forEach(group => {
-    if(group.bubbleIds.length === 2){
-      const b1 = bubbles.find(b=>b.id===group.bubbleIds[0]);
-      const b2 = bubbles.find(b=>b.id===group.bubbleIds[1]);
-      if(b1 && b2){
-        pctx.strokeStyle = group.color + '80';
-        pctx.lineWidth = 3;
-        pctx.setLineDash([5,4]);
-        pctx.beginPath();
-        pctx.moveTo(b1.x, b1.y);
-        pctx.lineTo(b2.x, b2.y);
-        pctx.stroke();
-        pctx.setLineDash([]);
-      }
-    }
+  // Pair connection lines
+  pairedGroups.forEach(g => {
+    if (g.bubbleIds.length !== 2) return;
+    const b1 = bubbles.find(b => b.id === g.bubbleIds[0]);
+    const b2 = bubbles.find(b => b.id === g.bubbleIds[1]);
+    if (!b1 || !b2) return;
+    pctx.strokeStyle = g.color + '70';
+    pctx.lineWidth   = 3;
+    pctx.setLineDash([5, 4]);
+    pctx.beginPath(); pctx.moveTo(b1.x, b1.y); pctx.lineTo(b2.x, b2.y); pctx.stroke();
+    pctx.setLineDash([]);
   });
 
-  // Snap zone highlight if dragging
-  if(dragging !== null){
-    const db = bubbles.find(b=>b.id===dragging.id);
-    if(db){
+  // Snap halo
+  if (dragging !== null) {
+    const db = bubbles.find(b => b.id === dragging.id);
+    if (db) {
       bubbles.forEach(b => {
-        if(!b.paired && b.id !== db.id && b.prime === db.prime){
-          const dist = Math.hypot(db.x-b.x, db.y-b.y);
-          if(dist < SNAP_DIST){
-            pctx.beginPath();
-            pctx.arc(b.x, b.y, BUBBLE_R+8, 0, Math.PI*2);
-            pctx.fillStyle = b.color + '30';
-            pctx.fill();
-            pctx.strokeStyle = b.color;
-            pctx.lineWidth=2.5;
-            pctx.stroke();
-          }
+        if (b.paired || b.id === db.id || b.prime !== db.prime) return;
+        const dist = Math.hypot(db.x - b.x, db.y - b.y);
+        if (dist < SNAP_DIST) {
+          pctx.beginPath(); pctx.arc(b.x, b.y, BUBBLE_R + 9, 0, Math.PI * 2);
+          pctx.fillStyle   = b.color + '28'; pctx.fill();
+          pctx.strokeStyle = b.color; pctx.lineWidth = 2.5; pctx.stroke();
         }
       });
     }
   }
 
-  // Draw bubbles (non-dragged first)
-  bubbles.forEach(b => {
-    if(dragging && b.id === dragging.id) return; // draw dragged last
-    drawBubble(b);
-  });
-  // Draw dragged bubble on top
-  if(dragging){
-    const db = bubbles.find(b=>b.id===dragging.id);
-    if(db) drawBubble(db, true);
-  }
+  // Bubbles — dragged last (on top)
+  bubbles.forEach(b => { if (!dragging || b.id !== dragging.id) drawBubble(b); });
+  if (dragging) { const db = bubbles.find(b => b.id === dragging.id); if (db) drawBubble(db, true); }
 }
 
-function drawBubble(b, isLifted=false){
+function drawBubble(b, lifted = false) {
   const ox = b.shake > 0 ? Math.sin(b.shake * 0.8) * 4 : 0;
-  const x = b.x + ox;
-  const y = b.y;
+  const x  = b.x + ox;
+  const y  = b.y;
 
-  // Shadow if lifted
-  if(isLifted){
-    pctx.shadowColor='rgba(0,0,0,0.25)';
-    pctx.shadowBlur=16;
-    pctx.shadowOffsetY=5;
+  if (lifted) {
+    pctx.shadowColor    = 'rgba(28,26,22,0.22)';
+    pctx.shadowBlur     = 18;
+    pctx.shadowOffsetY  = 6;
   }
 
-  // Circle
-  pctx.beginPath();
-  pctx.arc(x, y, BUBBLE_R, 0, Math.PI*2);
-
-  if(b.paired){
-    // Paired: show with checkmark overlay
-    pctx.fillStyle = b.color;
-  } else if(b.unpairable){
-    // Definitely cannot pair
-    pctx.fillStyle = '#c0392b';
-  } else {
-    pctx.fillStyle = b.color;
-  }
+  // Fill
+  pctx.beginPath(); pctx.arc(x, y, BUBBLE_R, 0, Math.PI * 2);
+  pctx.fillStyle = b.unpairable ? '#b84a2a' : b.color;
   pctx.fill();
 
-  // Border
-  pctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  pctx.lineWidth = 2;
+  // Ring
+  pctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  pctx.lineWidth   = 2;
   pctx.stroke();
 
-  pctx.shadowColor='transparent';
-  pctx.shadowBlur=0;
-  pctx.shadowOffsetY=0;
+  pctx.shadowColor = 'transparent'; pctx.shadowBlur = 0; pctx.shadowOffsetY = 0;
 
-  // Number label
-  pctx.font = `bold ${BUBBLE_R > 22 ? 20 : 16}px DM Mono, monospace`;
-  pctx.fillStyle = '#fff';
-  pctx.textAlign='center';
-  pctx.textBaseline='middle';
+  // Label
+  pctx.font         = `bold ${BUBBLE_R > 22 ? 20 : 16}px DM Mono, monospace`;
+  pctx.fillStyle    = '#fff';
+  pctx.textAlign    = 'center';
+  pctx.textBaseline = 'middle';
   pctx.fillText(b.prime, x, y);
 
-  // Paired checkmark ring
-  if(b.paired){
-    pctx.beginPath();
-    pctx.arc(x, y, BUBBLE_R+5, 0, Math.PI*2);
-    pctx.strokeStyle = b.color + 'aa';
-    pctx.lineWidth=2.5;
-    pctx.setLineDash([4,3]);
-    pctx.stroke();
-    pctx.setLineDash([]);
+  // Paired dashed ring
+  if (b.paired) {
+    pctx.beginPath(); pctx.arc(x, y, BUBBLE_R + 5, 0, Math.PI * 2);
+    pctx.strokeStyle = b.color + 'aa'; pctx.lineWidth = 2.5;
+    pctx.setLineDash([4, 3]); pctx.stroke(); pctx.setLineDash([]);
   }
 
-  // Unpairable X
-  if(b.unpairable){
-    pctx.strokeStyle='rgba(255,255,255,0.9)';
-    pctx.lineWidth=3;
-    pctx.lineCap='round';
-    const s=10;
+  // Unpairable ✗
+  if (b.unpairable) {
+    pctx.strokeStyle = 'rgba(255,255,255,.9)'; pctx.lineWidth = 3; pctx.lineCap = 'round';
+    const s = 9;
     pctx.beginPath();
-    pctx.moveTo(x-s, y+s); pctx.lineTo(x+s, y-s);
-    pctx.moveTo(x+s, y+s); pctx.lineTo(x-s, y-s);
+    pctx.moveTo(x - s, y + s); pctx.lineTo(x + s, y - s);
+    pctx.moveTo(x + s, y + s); pctx.lineTo(x - s, y - s);
     pctx.stroke();
   }
 }
 
-// Pointer events
+// Pointer events on canvas
 pairCanvas.addEventListener('pointerdown', e => {
   const rect = pairCanvas.getBoundingClientRect();
-  const mx = (e.clientX - rect.left);
-  const my = (e.clientY - rect.top);
-
-  // Find bubble under pointer (topmost, not already in a completed pair... allow dragging)
-  for(let i=bubbles.length-1; i>=0; i--){
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  for (let i = bubbles.length - 1; i >= 0; i--) {
     const b = bubbles[i];
-    if(!b.unpairable && Math.hypot(mx-b.x, my-b.y) < BUBBLE_R){
-      dragging = {id: b.id, offsetX: mx-b.x, offsetY: my-b.y};
+    if (b.unpairable) continue;
+    if (Math.hypot(mx - b.x, my - b.y) < BUBBLE_R) {
+      dragging = { id: b.id, offsetX: mx - b.x, offsetY: my - b.y };
       pairCanvas.setPointerCapture(e.pointerId);
-      // Unlink from existing pair if re-dragging
-      if(b.paired){
-        const grpIdx = pairedGroups.findIndex(g=>g.bubbleIds.includes(b.id));
-        if(grpIdx >= 0){
-          const grp = pairedGroups[grpIdx];
-          grp.bubbleIds.forEach(bid => {
-            const bub = bubbles.find(bb=>bb.id===bid);
-            if(bub){ bub.paired=false; bub.pairedWith=null; }
+      if (b.paired) {
+        const gi = pairedGroups.findIndex(g => g.bubbleIds.includes(b.id));
+        if (gi >= 0) {
+          pairedGroups[gi].bubbleIds.forEach(bid => {
+            const bub = bubbles.find(bb => bb.id === bid);
+            if (bub) { bub.paired = false; bub.pairedWith = null; }
           });
-          pairedGroups.splice(grpIdx,1);
+          pairedGroups.splice(gi, 1);
           updateResultStrip();
         }
       }
@@ -501,334 +560,291 @@ pairCanvas.addEventListener('pointerdown', e => {
 });
 
 pairCanvas.addEventListener('pointermove', e => {
-  if(dragging===null) return;
+  if (dragging === null) return;
   const rect = pairCanvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  const b = bubbles.find(bb=>bb.id===dragging.id);
-  if(b){ b.x = mx - dragging.offsetX; b.y = my - dragging.offsetY; }
+  const b    = bubbles.find(bb => bb.id === dragging.id);
+  if (b) { b.x = e.clientX - rect.left - dragging.offsetX; b.y = e.clientY - rect.top - dragging.offsetY; }
   drawPair();
 });
 
-pairCanvas.addEventListener('pointerup', e => {
-  if(dragging===null) return;
-  const db = bubbles.find(b=>b.id===dragging.id);
-
-  if(db){
-    // Check for snap
+pairCanvas.addEventListener('pointerup', () => {
+  if (dragging === null) return;
+  const db = bubbles.find(b => b.id === dragging.id);
+  if (db) {
     let snapped = false;
-    for(const target of bubbles){
-      if(target.id===db.id || target.paired) continue;
-      if(target.prime === db.prime){
-        const dist = Math.hypot(db.x-target.x, db.y-target.y);
-        if(dist < SNAP_DIST){
-          // PAIR THEM
-          const midX = (db.x+target.x)/2;
-          const midY = (db.y+target.y)/2;
-          db.x = midX - BUBBLE_R - 4;
-          db.y = midY;
-          target.x = midX + BUBBLE_R + 4;
-          target.y = midY;
-          db.paired=true; db.pairedWith=target.id;
-          target.paired=true; target.pairedWith=db.id;
-          pairedGroups.push({prime: db.prime, color: db.color, bubbleIds:[db.id, target.id]});
-          snapped=true;
-          // Animate snap
-          animateSnap(db, target);
-          break;
-        }
+    for (const target of bubbles) {
+      if (target.id === db.id || target.paired || target.prime !== db.prime) continue;
+      if (Math.hypot(db.x - target.x, db.y - target.y) < SNAP_DIST) {
+        const midX = (db.x + target.x) / 2;
+        const midY = (db.y + target.y) / 2;
+        db.x = midX - BUBBLE_R - 4; db.y = midY;
+        target.x = midX + BUBBLE_R + 4; target.y = midY;
+        db.paired = true; db.pairedWith = target.id;
+        target.paired = true; target.pairedWith = db.id;
+        pairedGroups.push({ prime: db.prime, color: db.color, bubbleIds: [db.id, target.id] });
+        snapped = true;
+        // Pulse animation
+        let t = 0; const anim = () => { t++; drawPair(); if (t < 8) requestAnimationFrame(anim); };
+        requestAnimationFrame(anim);
+        break;
       }
     }
-    if(!snapped){
-      // Check if this bubble has any possible partners
-      const canPair = bubbles.some(b=>b.id!==db.id && !b.paired && b.prime===db.prime);
-      if(!canPair && !db.paired){
-        // Shake animation
+    if (!snapped && !db.paired) {
+      const canPair = bubbles.some(b => b.id !== db.id && !b.paired && b.prime === db.prime);
+      if (!canPair) {
         db.shake = 20;
-        shakeAnimate(db.id);
+        const shake = id => {
+          const b = bubbles.find(bb => bb.id === id);
+          if (!b || b.shake <= 0) return;
+          b.shake--; drawPair();
+          if (b.shake > 0) requestAnimationFrame(() => shake(id));
+          else { b.unpairable = true; drawPair(); }
+        };
+        shake(db.id);
       }
     }
   }
-
-  dragging=null;
+  dragging = null;
   updateResultStrip();
   drawPair();
 });
 
-function animateSnap(b1, b2){
-  // Quick scale pulse
-  let t=0;
-  const anim=()=>{
-    t++;
-    drawPair();
-    if(t<8) requestAnimationFrame(anim);
-  };
-  requestAnimationFrame(anim);
-}
-
-function shakeAnimate(bubbleId){
-  const b=bubbles.find(bb=>bb.id===bubbleId);
-  if(!b || b.shake<=0) return;
-  b.shake--;
-  drawPair();
-  if(b.shake>0) requestAnimationFrame(()=>shakeAnimate(bubbleId));
-  else { b.unpairable=true; drawPair(); }
-}
-
-function updateResultStrip(){
-  // Check all bubbles: which have no possible pairs?
+function updateResultStrip() {
+  // Mark unpairable
   bubbles.forEach(b => {
-    if(!b.paired){
-      const canPair=bubbles.some(bb=>bb.id!==b.id && !bb.paired && bb.prime===b.prime);
-      if(!canPair) b.unpairable=true;
-    } else { b.unpairable=false; }
+    if (!b.paired) {
+      b.unpairable = !bubbles.some(bb => bb.id !== b.id && !bb.paired && bb.prime === b.prime);
+    } else {
+      b.unpairable = false;
+    }
   });
 
-  const rootFactors = pairedGroups.map(g=>g.prime);
-  const unpairedLeft = bubbles.filter(b=>!b.paired && b.unpairable);
-  const allPaired = bubbles.every(b=>b.paired || b.unpairable);
+  const rootFactors  = pairedGroups.map(g => g.prime);
+  const unpairedLeft = bubbles.filter(b => !b.paired && b.unpairable);
+  const allDone      = bubbles.every(b => b.paired || b.unpairable);
 
   // Root row
   const rootRow = document.getElementById('root-row');
-  if(rootFactors.length === 0){
-    rootRow.innerHTML=`<span class="root-label">Root = </span><span style="color:var(--text3);font-family:var(--mono)">pair up factors to see...</span>`;
+  if (rootFactors.length === 0) {
+    rootRow.innerHTML = `<span class="root-label">Root =</span><span style="color:var(--ink3);font-family:var(--mono);font-size:13px">pair up factors to see…</span>`;
   } else {
-    const rootVal = rootFactors.reduce((a,b)=>a*b,1);
-    let html=`<span class="root-label">Root = </span>`;
-    pairedGroups.forEach((g,i)=>{
-      if(i>0) html+=`<span class="root-times">×</span>`;
-      html+=`<div class="root-bubble" style="background:${g.color}">${g.prime}</div>`;
+    const rootVal = rootFactors.reduce((a, b) => a * b, 1);
+    let html = '<span class="root-label">Root =</span>';
+    pairedGroups.forEach((g, i) => {
+      if (i > 0) html += '<span class="root-times">×</span>';
+      html += `<div class="root-bubble" style="background:${g.color}">${g.prime}</div>`;
     });
-    if(unpairedLeft.length>0){
-      html+=` <span class="root-eq" style="color:var(--red)">+ unpaired: </span>`;
-      unpairedLeft.forEach(b=>{
-        html+=`<div class="root-bubble" style="background:var(--red)">${b.prime}</div>`;
-      });
-    } else if(allPaired){
-      html+=`<span class="root-eq">= </span><span class="root-ans">${rootVal}</span>`;
+    if (unpairedLeft.length > 0) {
+      html += `<span class="root-eq" style="color:var(--rust)">+ unpaired:</span>`;
+      unpairedLeft.forEach(b => { html += `<div class="root-bubble" style="background:var(--rust)">${b.prime}</div>`; });
+    } else if (allDone) {
+      html += `<span class="root-eq">=</span><span class="root-ans">${rootVal}</span>`;
     }
-    rootRow.innerHTML=html;
+    rootRow.innerHTML = html;
   }
 
   // Result strip
   const strip = document.getElementById('result-strip');
   const rsVal = document.getElementById('rs-val');
   const rsSub = document.getElementById('rs-sub');
-
-  if(!allPaired){
-    strip.className='result-strip pending';
-    rsVal.textContent='—';
-    rsSub.textContent='Pair up all factors to find the square root';
+  if (!allDone) {
+    strip.className = 'result-strip pending';
+    rsVal.textContent = '—';
+    rsSub.textContent = 'Pair up all factors to find the square root';
     return;
   }
-
-  if(unpairedLeft.length===0){
-    // Perfect square
-    const root=rootFactors.reduce((a,b)=>a*b,1);
-    strip.className='result-strip success';
-    rsVal.textContent=`√${currentN} = ${root}`;
-    rsSub.textContent='All factors paired — perfect square ✓';
+  if (unpairedLeft.length === 0) {
+    const root = rootFactors.reduce((a, b) => a * b, 1);
+    strip.className = 'result-strip success';
+    rsVal.textContent = `√${currentN} = ${root}`;
+    rsSub.textContent = 'All factors paired — perfect square ✓';
   } else {
-    // Not a perfect square
-    strip.className='result-strip fail';
-    const unpairedPrimes=unpairedLeft.map(b=>b.prime);
-    const toMul=unpairedPrimes.reduce((a,b)=>a*b,1);
-    rsVal.textContent=`${currentN} is not a perfect square`;
-    rsSub.textContent=`Leftover: ${unpairedPrimes.join(', ')}. Multiply by ${toMul} → ${currentN*toMul} is a perfect square (√=${Math.round(Math.sqrt(currentN*toMul))})`;
+    strip.className = 'result-strip fail';
+    const unpairedPrimes = unpairedLeft.map(b => b.prime);
+    const toMul = unpairedPrimes.reduce((a, b) => a * b, 1);
+    rsVal.textContent = `${currentN} is not a perfect square`;
+    rsSub.textContent = `Leftover: ${unpairedPrimes.join(', ')}. Multiply by ${toMul} → ${currentN * toMul} has √ = ${Math.round(Math.sqrt(currentN * toMul))}`;
   }
 }
 
-// Resize observer
-new ResizeObserver(()=>{
-  pctx.resetTransform();
-  pctx.scale(PR,PR);
-  resizePairCanvas();
+new ResizeObserver(() => {
+  // Rerun initPair layout with new width so column count + height recalculate
+  if (bubbles.length > 0) {
+    // Recompute positions with new width, preserving pair state
+    const wrap   = pairCanvas.parentElement;
+    const W      = wrap.clientWidth || 600;
+    const GAP_X  = BUBBLE_R * 2 + 16;
+    const GAP_Y  = BUBBLE_R * 2 + 22;
+    const PAD_X  = 32;
+    const PAD_Y  = 48;
+    const PAD_BOT = 28;
+    const cols   = Math.max(1, Math.min(bubbles.length, Math.floor((W - PAD_X * 2) / GAP_X)));
+    bubbles.forEach((b, i) => {
+      b.x = PAD_X + BUBBLE_R + (i % cols) * GAP_X;
+      b.y = PAD_Y + BUBBLE_R + Math.floor(i / cols) * GAP_Y;
+    });
+    const numRows = Math.ceil(bubbles.length / cols);
+    const neededH = PAD_Y + numRows * GAP_Y + PAD_BOT;
+    pctx.resetTransform();
+    pctx.scale(PR, PR);
+    resizePairCanvas(neededH);
+  }
 }).observe(pairCanvas.parentElement);
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
 // SQUEEZE TAB
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
 const sqzCanvas = document.getElementById('squeeze-canvas');
-const sqzCtx = sqzCanvas.getContext('2d');
-const sqzPR = window.devicePixelRatio || 1;
-
+const sqzCtx    = sqzCanvas.getContext('2d');
+const sqzPR     = Math.min(window.devicePixelRatio || 1, 2);
 let sqzLo = 1, sqzHi = 320, sqzN = 324;
 
-function initSqueeze(){
-  sqzN = currentN;
+function initSqueeze() {
+  sqzN  = currentN;
   const sq = Math.sqrt(sqzN);
   sqzLo = 1;
   sqzHi = Math.ceil(sq) + 5;
-
   const maxVal = Math.ceil(Math.sqrt(99999)) + 2;
-  document.getElementById('lo-slider').max = maxVal - 1;
-  document.getElementById('hi-slider').max = maxVal;
+  document.getElementById('lo-slider').max   = maxVal - 1;
+  document.getElementById('hi-slider').max   = maxVal;
   document.getElementById('lo-slider').value = sqzLo;
   document.getElementById('hi-slider').value = sqzHi;
-
   updateSqueeze();
 }
 
 document.getElementById('lo-slider').addEventListener('input', e => {
   sqzLo = +e.target.value;
-  if(sqzLo >= sqzHi) sqzLo = sqzHi - 1;
+  if (sqzLo >= sqzHi) sqzLo = sqzHi - 1;
   document.getElementById('lo-slider').value = sqzLo;
   updateSqueeze();
 });
 document.getElementById('hi-slider').addEventListener('input', e => {
   sqzHi = +e.target.value;
-  if(sqzHi <= sqzLo) sqzHi = sqzLo + 1;
+  if (sqzHi <= sqzLo) sqzHi = sqzLo + 1;
   document.getElementById('hi-slider').value = sqzHi;
   updateSqueeze();
 });
 
-function updateSqueeze(){
-  const lo=sqzLo, hi=sqzHi, n=sqzN;
-  const sq=Math.sqrt(n);
-
-  document.getElementById('lo-val').textContent=lo;
-  document.getElementById('hi-val').textContent=hi;
-  document.getElementById('lo-sq').textContent=`${lo}² = ${lo*lo}`;
-  document.getElementById('hi-sq').textContent=`${hi}² = ${hi*hi}`;
-
+function updateSqueeze() {
+  const lo = sqzLo, hi = sqzHi, n = sqzN;
+  const sq = Math.sqrt(n);
+  document.getElementById('lo-val').textContent = lo;
+  document.getElementById('hi-val').textContent = hi;
+  document.getElementById('lo-sq').textContent  = `${lo}² = ${lo * lo}`;
+  document.getElementById('hi-sq').textContent  = `${hi}² = ${hi * hi}`;
   drawSqueeze(lo, hi, n, sq);
 
-  // Result
-  const res=document.getElementById('squeeze-result');
-  const srMain=document.getElementById('sr-main');
-  const srSub=document.getElementById('sr-sub');
-  const gap=hi-lo;
+  const res    = document.getElementById('squeeze-result');
+  const srMain = document.getElementById('sr-main');
+  const srSub  = document.getElementById('sr-sub');
+  const gap    = hi - lo;
 
-  if(lo*lo === n){
-    res.className='squeeze-result exact';
-    srMain.textContent=`√${n} = ${lo} exactly`;
-    srSub.textContent=`${lo}² = ${lo*lo} = ${n} ✓`;
-  } else if(hi*hi === n){
-    res.className='squeeze-result exact';
-    srMain.textContent=`√${n} = ${hi} exactly`;
-    srSub.textContent=`${hi}² = ${hi*hi} = ${n} ✓`;
-  } else if(lo*lo > n){
-    res.className='squeeze-result wide';
-    srMain.textContent=`${lo}² = ${lo*lo} > ${n} — lower bound too high!`;
-    srSub.textContent='Drag the blue slider down';
-  } else if(hi*hi < n){
-    res.className='squeeze-result wide';
-    srMain.textContent=`${hi}² = ${hi*hi} < ${n} — upper bound too low!`;
-    srSub.textContent='Drag the red slider up';
-  } else if(gap===1){
-    res.className='squeeze-result exact';
-    srMain.textContent=`${lo} < √${n} < ${hi}`;
-    srSub.textContent=`${lo}² = ${lo*lo} < ${n} < ${hi*hi} = ${hi}² — perfectly squeezed! (≈ ${sq.toFixed(3)})`;
-  } else if(gap<=3){
-    res.className='squeeze-result close';
-    srMain.textContent=`${lo} ≤ √${n} ≤ ${hi}`;
-    srSub.textContent=`Getting close — gap is ${gap}. Keep squeezing!`;
+  if (lo * lo === n) {
+    res.className = 'squeeze-result exact';
+    srMain.textContent = `√${n} = ${lo} exactly`;
+    srSub.textContent  = `${lo}² = ${lo * lo} = ${n} ✓`;
+  } else if (hi * hi === n) {
+    res.className = 'squeeze-result exact';
+    srMain.textContent = `√${n} = ${hi} exactly`;
+    srSub.textContent  = `${hi}² = ${hi * hi} = ${n} ✓`;
+  } else if (lo * lo > n) {
+    res.className = 'squeeze-result wide';
+    srMain.textContent = `${lo}² = ${lo * lo} > ${n} — lower bound too high`;
+    srSub.textContent  = 'Drag the teal slider down';
+  } else if (hi * hi < n) {
+    res.className = 'squeeze-result wide';
+    srMain.textContent = `${hi}² = ${hi * hi} < ${n} — upper bound too low`;
+    srSub.textContent  = 'Drag the rust slider up';
+  } else if (gap === 1) {
+    res.className = 'squeeze-result exact';
+    srMain.textContent = `${lo} < √${n} < ${hi}`;
+    srSub.textContent  = `${lo}² = ${lo*lo} < ${n} < ${hi*hi} = ${hi}² — perfectly squeezed! (≈ ${sq.toFixed(3)})`;
+  } else if (gap <= 3) {
+    res.className = 'squeeze-result close';
+    srMain.textContent = `${lo} ≤ √${n} ≤ ${hi}`;
+    srSub.textContent  = `Getting close — gap is ${gap}. Keep squeezing!`;
   } else {
-    res.className='squeeze-result wide';
-    srMain.textContent=`${lo} ≤ √${n} ≤ ${hi}`;
-    srSub.textContent=`Gap = ${gap}. Narrow it by moving the bounds inward.`;
+    res.className = 'squeeze-result wide';
+    srMain.textContent = `${lo} ≤ √${n} ≤ ${hi}`;
+    srSub.textContent  = `Gap = ${gap}. Narrow the bounds inward.`;
   }
 }
 
-function drawSqueeze(lo, hi, n, sq){
-  const wrap=sqzCanvas.parentElement;
-  const W=wrap.clientWidth;
-  sqzCanvas.style.width=W+'px';
-  sqzCanvas.style.height='120px';
-  sqzCanvas.width=W*sqzPR;
-  sqzCanvas.height=120*sqzPR;
-  const ctx=sqzCtx;
-  ctx.resetTransform();
-  ctx.scale(sqzPR, sqzPR);
-  ctx.clearRect(0,0,W,120);
-  ctx.fillStyle='#f0ede8';
-  ctx.fillRect(0,0,W,120);
+function drawSqueeze(lo, hi, n, sq) {
+  const wrap = sqzCanvas.parentElement;
+  const W    = wrap.clientWidth;
+  sqzCanvas.style.width  = W + 'px';
+  sqzCanvas.style.height = '124px';
+  sqzCanvas.width  = W * sqzPR;
+  sqzCanvas.height = 124 * sqzPR;
+  const ctx = sqzCtx;
+  ctx.resetTransform(); ctx.scale(sqzPR, sqzPR);
+  ctx.clearRect(0, 0, W, 124);
 
-  const PAD=50;
-  const cW=W-2*PAD;
+  // Warm background
+  ctx.fillStyle = '#f3f0ea'; ctx.fillRect(0, 0, W, 124);
 
-  // The number line spans from lo-1.5 to hi+1.5
-  const viewLo=Math.max(0, lo-2);
-  const viewHi=hi+2;
-  const px=v=>PAD+(v-viewLo)/(viewHi-viewLo)*cW;
+  const PAD = 52, cW = W - 2 * PAD;
+  const viewLo = Math.max(0, lo - 2), viewHi = hi + 2;
+  const px = v => PAD + (v - viewLo) / (viewHi - viewLo) * cW;
 
-  // Shaded interval [lo,hi]
-  const inBounds = lo*lo <= n && hi*hi >= n;
-  ctx.fillStyle = inBounds ? 'rgba(26,122,74,0.10)' : 'rgba(192,57,43,0.10)';
-  ctx.fillRect(px(lo), 48, px(hi)-px(lo), 24);
+  // Shaded interval
+  const inBounds = lo * lo <= n && hi * hi >= n;
+  ctx.fillStyle = inBounds ? 'rgba(58,106,72,.10)' : 'rgba(184,74,42,.10)';
+  ctx.fillRect(px(lo), 48, px(hi) - px(lo), 26);
 
-  // Number line
-  ctx.strokeStyle='#c8bfb5';
-  ctx.lineWidth=2;
-  ctx.beginPath();
-  ctx.moveTo(PAD,60); ctx.lineTo(W-PAD,60);
-  ctx.stroke();
+  // Axis line
+  ctx.strokeStyle = '#c8bfb5'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(PAD, 61); ctx.lineTo(W - PAD, 61); ctx.stroke();
 
-  // Tick marks and labels for integers in view
-  for(let i=Math.ceil(viewLo); i<=Math.floor(viewHi); i++){
-    const x=px(i);
-    ctx.strokeStyle='#d0c8c0';
-    ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(x,54); ctx.lineTo(x,66); ctx.stroke();
-
-    // i² label above
-    ctx.font='bold 10px DM Mono,monospace';
-    ctx.fillStyle='#9a958e';
-    ctx.textAlign='center';
-    const sqLabel=`${i}²=${i*i}`;
-    if(i===lo||i===hi||viewHi-viewLo<=10) ctx.fillText(sqLabel, x, 28);
-    // n label below
-    ctx.font='10px DM Mono,monospace';
-    ctx.fillText(i, x, 80);
+  // Ticks + labels
+  for (let i = Math.ceil(viewLo); i <= Math.floor(viewHi); i++) {
+    const x = px(i);
+    ctx.strokeStyle = '#d4cfc5'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x, 55); ctx.lineTo(x, 67); ctx.stroke();
+    ctx.font      = 'bold 10px DM Mono, monospace';
+    ctx.fillStyle = '#8a8580'; ctx.textAlign = 'center';
+    if (i === lo || i === hi || viewHi - viewLo <= 10)
+      ctx.fillText(`${i}²=${i*i}`, x, 30);
+    ctx.font = '10px DM Mono, monospace';
+    ctx.fillText(i, x, 82);
   }
 
-  // n position (true √n)
-  const sqX=px(sq);
-  ctx.strokeStyle='#1a7a4a';
-  ctx.lineWidth=2.5;
-  ctx.setLineDash([5,4]);
-  ctx.beginPath(); ctx.moveTo(sqX,20); ctx.lineTo(sqX,100); ctx.stroke();
+  // True √n dashed line
+  const sqX = px(sq);
+  ctx.strokeStyle = '#3a6a48'; ctx.lineWidth = 2.5;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath(); ctx.moveTo(sqX, 18); ctx.lineTo(sqX, 104); ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle='#1a7a4a';
-  ctx.font='bold 11px DM Mono,monospace';
-  ctx.textAlign='center';
-  ctx.fillText(`√${n}`, sqX, 14);
+  ctx.fillStyle = '#3a6a48'; ctx.font = 'bold 11px DM Mono, monospace';
+  ctx.textAlign = 'center'; ctx.fillText(`√${n}`, sqX, 13);
 
-  // lo marker
-  const loX=px(lo);
-  ctx.beginPath(); ctx.arc(loX, 60, 9, 0, Math.PI*2);
-  ctx.fillStyle='#2c5f9e'; ctx.fill();
-  ctx.fillStyle='#fff'; ctx.font='bold 10px DM Mono'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText(lo, loX, 60);
-  ctx.textBaseline='alphabetic';
+  // lo dot (teal)
+  const loX = px(lo);
+  ctx.beginPath(); ctx.arc(loX, 61, 9, 0, Math.PI * 2);
+  ctx.fillStyle = '#1d6a72'; ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 10px DM Mono'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(lo, loX, 61);
 
-  // hi marker
-  const hiX=px(hi);
-  ctx.beginPath(); ctx.arc(hiX, 60, 9, 0, Math.PI*2);
-  ctx.fillStyle='#c0392b'; ctx.fill();
-  ctx.fillStyle='#fff'; ctx.font='bold 10px DM Mono'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText(hi, hiX, 60);
-  ctx.textBaseline='alphabetic';
+  // hi dot (rust)
+  const hiX = px(hi);
+  ctx.beginPath(); ctx.arc(hiX, 61, 9, 0, Math.PI * 2);
+  ctx.fillStyle = '#b84a2a'; ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.fillText(hi, hiX, 61);
+  ctx.textBaseline = 'alphabetic';
 
-  // Bracket arrows
-  if(loX < sqX-12){
-    ctx.fillStyle='#2c5f9e';
-    ctx.font='16px DM Sans'; ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText('→', loX+22, 60);
-  }
-  if(hiX > sqX+12){
-    ctx.fillStyle='#c0392b';
-    ctx.fillText('←', hiX-22, 60);
-  }
+  // Arrow nudges
+  if (loX < sqX - 14) { ctx.fillStyle = '#1d6a72'; ctx.font = '15px DM Sans'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('→', loX + 20, 61); }
+  if (hiX > sqX + 14) { ctx.fillStyle = '#b84a2a'; ctx.fillText('←', hiX - 20, 61); }
 }
 
-new ResizeObserver(()=>{
-  if(document.getElementById('view-squeeze').classList.contains('active')) updateSqueeze();
+new ResizeObserver(() => {
+  if (document.getElementById('view-squeeze').classList.contains('active')) updateSqueeze();
 }).observe(sqzCanvas.parentElement);
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
 // INIT
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
 initPair();
 initSqueeze();
 </script>
