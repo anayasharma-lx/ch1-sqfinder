@@ -3,307 +3,332 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Square Root Finder — Ganita Prakash Grade 8</title>
+<title>Square Root Finder · Chapter 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --paper:  #faf8f4;
-  --paper2: #f3f0ea;
-  --paper3: #e8e3d8;
-  --ink:    #1c1a16;
-  --ink2:   #4a4640;
-  --ink3:   #8a8580;
-  --rule:   #d4cfc5;
-
-  --teal:   #1d6a72;
-  --teal2:  #2a8a94;
-  --teal-bg:#e8f4f5;
-  --rust:   #b84a2a;
-  --rust-bg:#fdf0ec;
-  --gold:   #c08030;
-  --gold-bg:#fdf5e8;
-  --sage:   #3a6a48;
-  --sage-bg:#eaf2ec;
-  --violet: #6a4a90;
-  --violet-bg:#f2eef8;
-
-  --font:  'DM Sans', sans-serif;
-  --serif: 'Lora', Georgia, serif;
-  --mono:  'DM Mono', ui-monospace, monospace;
-  --shadow:0 2px 12px rgba(28,26,22,.08);
+  --bg:#0a0c0f;
+  --s1:#0f1218;
+  --s2:#141820;
+  --s3:#1a2030;
+  --border:rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.12);
+  --text:#dde4ee;
+  --text2:rgba(221,228,238,0.5);
+  --text3:rgba(221,228,238,0.25);
+  --green:#2dde98;
+  --green-dim:rgba(45,222,152,0.1);
+  --green-glow:rgba(45,222,152,0.35);
+  --red:#ff4f5e;
+  --red-dim:rgba(255,79,94,0.1);
+  --red-glow:rgba(255,79,94,0.3);
+  --blue:#5b9af6;
+  --blue-dim:rgba(91,154,246,0.1);
+  --amber:#f5a623;
+  --amber-dim:rgba(245,166,35,0.1);
+  --mono:'Space Mono',monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Syne',sans-serif;
 }
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
 
-body{
-  font-family:var(--font);background:var(--paper);color:var(--ink);
-  min-height:100vh;-webkit-font-smoothing:antialiased;
-  padding:32px 20px 60px;line-height:1.6;
-  background-image:
-    radial-gradient(circle at 20% 30%,rgba(192,128,48,.04) 0,transparent 50%),
-    radial-gradient(circle at 80% 70%,rgba(29,106,114,.04) 0,transparent 50%);
-}
-.app{max-width:900px;margin:0 auto}
+/* ── OUTER SHELL ── */
+#shell{position:fixed;inset:0;display:grid;grid-template-rows:56px 1fr;overflow:hidden}
 
-/* ── HEADER ─────────────────────────────────────────── */
-.header{margin-bottom:28px;border-bottom:1.5px solid var(--rule);padding-bottom:20px}
-.chapter-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--paper2);border:1.5px solid var(--rule);
-  border-radius:20px;padding:4px 14px 4px 10px;
-  font-size:11px;font-weight:600;letter-spacing:.6px;
-  text-transform:uppercase;color:var(--ink3);margin-bottom:12px
+/* ── TOPBAR ── */
+#topbar{
+  background:var(--s1);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0;
 }
-.badge-num{
-  width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;
-  font-size:12px;font-weight:700;font-family:var(--mono);
-  display:flex;align-items:center;justify-content:center
+.tb-pill{
+  font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--green);padding:3px 10px;border:1px solid rgba(45,222,152,0.3);
+  border-radius:10px;background:var(--green-dim);
 }
-h1{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.3px;line-height:1.2}
-.header-sub{font-size:14px;color:var(--ink2);margin-top:6px;max-width:540px;line-height:1.55}
-
-/* ── CARD ────────────────────────────────────────────── */
-.card{
-  background:var(--paper);border:1.5px solid var(--rule);
-  border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)
+.tb-title{font-family:var(--serif);font-size:19px;color:var(--text)}
+.tb-title em{font-style:italic;color:var(--green)}
+.tb-spacer{flex:1}
+.tb-num-wrap{display:flex;align-items:center;gap:8px}
+.tb-num-label{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3)}
+#tb-num-input{
+  background:var(--s2);border:1px solid var(--border2);border-radius:6px;
+  color:var(--text);font-family:var(--mono);font-size:18px;font-weight:700;
+  padding:4px 10px;width:110px;text-align:center;outline:none;
+  transition:border-color .15s;
 }
-
-/* ── NUMBER INPUT ROW ────────────────────────────────── */
-.input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-.num-input{
-  padding:10px 14px;border:1.5px solid var(--rule);border-radius:9px;
-  font-family:var(--mono);font-size:22px;font-weight:700;
-  background:#fff;color:var(--ink);outline:none;width:160px;
-  text-align:center;transition:border-color .15s
-}
-.num-input:focus{border-color:var(--teal)}
+#tb-num-input:focus{border-color:var(--green)}
 .go-btn{
-  padding:10px 22px;border:none;border-radius:9px;
-  background:var(--teal);color:#fff;font-family:var(--font);
-  font-size:14px;font-weight:700;cursor:pointer;transition:all .14s;letter-spacing:.2px
+  padding:5px 14px;background:var(--green);border:none;border-radius:6px;
+  color:var(--bg);font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;
 }
-.go-btn:hover{background:#155a62}
-.presets{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.preset-lbl{font-size:12px;color:var(--ink3);font-weight:600}
-.preset{
-  padding:5px 12px;border:1.5px solid var(--rule);border-radius:20px;
-  font-family:var(--mono);font-size:12px;color:var(--ink2);cursor:pointer;
-  background:var(--paper);transition:all .12s;font-weight:600
+.go-btn:hover{filter:brightness(1.12)}
+.presets-wrap{display:flex;gap:5px;align-items:center}
+.preset-btn{
+  padding:3px 9px;background:transparent;border:1px solid var(--border2);
+  border-radius:4px;color:var(--text3);font-family:var(--mono);font-size:10px;
+  cursor:pointer;transition:all .12s;
 }
-.preset:hover{border-color:var(--teal);color:var(--teal)}
+.preset-btn:hover{border-color:var(--green);color:var(--green)}
 
-/* ── TABS ────────────────────────────────────────────── */
-.tabs{
-  display:flex;gap:3px;background:var(--paper2);border:1.5px solid var(--rule);
-  border-radius:12px;padding:4px;margin-bottom:22px
-}
-.tab{
-  flex:1;padding:10px 10px;border:none;background:transparent;
-  border-radius:9px;font-family:var(--font);font-size:13px;font-weight:600;
-  color:var(--ink3);cursor:pointer;transition:all .18s;text-align:center
-}
-.tab:hover{color:var(--ink2)}
-.tab.active{
-  background:#fff;color:var(--ink);
-  box-shadow:0 1px 4px rgba(28,26,22,.10);border:1.5px solid var(--rule)
-}
-.view{display:none}
-.view.active{display:block}
+/* ── BODY ── */
+#body{display:grid;grid-template-columns:1fr 320px;overflow:hidden;min-height:0}
 
-/* ── CONCEPT BANNER ──────────────────────────────────── */
-.concept{
-  background:var(--gold-bg);border-left:3px solid var(--gold);
-  border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:20px;
-  font-family:var(--serif);font-style:italic;font-size:14px;
-  color:#4a3010;line-height:1.65
+/* ── WORKBENCH (left) ── */
+#workbench{
+  position:relative;overflow:hidden;
+  background:var(--s1);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
 }
-.concept strong{font-style:normal;font-weight:700;color:#3a2008}
-
-/* ── PAIR TAB ────────────────────────────────────────── */
-.pair-stage-wrap{
-  position:relative;background:var(--paper2);border:1.5px solid var(--rule);
-  border-radius:12px;overflow:hidden;margin-bottom:14px
+.wb-header{
+  padding:14px 20px 10px;border-bottom:1px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
 }
-#pair-canvas{display:block;width:100%;cursor:default;touch-action:none}
+.wb-tab-strip{display:flex;gap:2px}
+.wb-tab{
+  padding:6px 14px;background:transparent;border:1px solid var(--border);
+  border-radius:5px;color:var(--text3);font-family:var(--mono);font-size:9px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;
+}
+.wb-tab:hover{color:var(--text2);border-color:var(--border2)}
+.wb-tab.on{background:var(--s3);border-color:var(--border2);color:var(--text)}
+.reset-tiny{
+  padding:5px 10px;background:transparent;border:1px solid var(--border);
+  border-radius:4px;color:var(--text3);font-family:var(--mono);font-size:9px;
+  letter-spacing:.8px;cursor:pointer;transition:all .12s;
+}
+.reset-tiny:hover{border-color:var(--border2);color:var(--text2)}
 
-.pair-banner{
-  position:absolute;top:10px;left:50%;transform:translateX(-50%);
-  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-  color:var(--ink3);background:rgba(250,248,244,.92);
-  padding:4px 14px;border-radius:20px;pointer-events:none;
-  white-space:nowrap;border:1px solid var(--rule)
+.wb-pane{display:none;flex:1;position:relative;overflow:hidden}
+.wb-pane.on{display:flex;flex-direction:column}
+
+/* pair canvas */
+#pair-wrap{flex:1;position:relative;overflow:hidden}
+#pair-canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+#pair-canvas:active{cursor:grabbing}
+.pair-hint{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text3);pointer-events:none;white-space:nowrap;
+  background:rgba(10,12,15,0.8);padding:4px 12px;border-radius:12px;
+  border:1px solid var(--border);
 }
 
-/* Root row */
-.root-row{
-  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-  padding:12px 16px;background:var(--paper2);
-  border:1.5px solid var(--rule);border-radius:10px;
-  font-family:var(--mono);font-size:14px;font-weight:600;
-  min-height:54px;margin-bottom:12px
+/* squeeze canvas */
+#squeeze-wrap{
+  flex:1;display:flex;flex-direction:column;
+  padding:24px 24px 16px;gap:16px;overflow-y:auto;
 }
-.root-bubble{
-  width:38px;height:38px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0
+#squeeze-canvas{display:block;width:100%;flex-shrink:0;border-radius:8px;overflow:hidden}
+.sq-sliders{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sq-slider-card{
+  padding:14px;border-radius:8px;border:1px solid;
 }
-.root-times{color:var(--ink3);font-size:16px}
-.root-eq{color:var(--ink3)}
-.root-ans{font-size:22px;font-weight:800;color:var(--teal)}
-.root-label{font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.sq-slider-card.lo{background:var(--blue-dim);border-color:rgba(91,154,246,0.25)}
+.sq-slider-card.hi{background:var(--red-dim);border-color:rgba(255,79,94,0.25)}
+.sc-label{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.lo .sc-label{color:var(--blue)}
+.hi .sc-label{color:var(--red)}
+.sc-val{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1;margin-bottom:3px}
+.lo .sc-val{color:var(--blue)}
+.hi .sc-val{color:var(--red)}
+.sc-sq{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px}
+.sc-range{width:100%;height:2px;-webkit-appearance:none;border-radius:1px;background:var(--border2);outline:none;cursor:pointer}
+.lo .sc-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px rgba(91,154,246,0.4);cursor:pointer}
+.hi .sc-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red-glow);cursor:pointer}
 
-/* Result strip */
-.result-strip{
-  padding:16px 18px;border-radius:10px;border:1.5px solid;
-  text-align:center;margin-bottom:12px;transition:all .3s
+.squeeze-verdict{
+  padding:12px 16px;border-radius:8px;border:1px solid;text-align:center;
+  transition:all .3s;flex-shrink:0;
 }
-.result-strip.pending{background:var(--paper2);border-color:var(--rule);color:var(--ink3)}
-.result-strip.success{background:var(--sage-bg);border-color:#8abcaa;color:var(--sage)}
-.result-strip.fail   {background:var(--rust-bg);border-color:#e0a898;color:var(--rust)}
-.rs-val{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1.2}
-.rs-sub{font-size:12px;font-weight:600;margin-top:5px;font-family:var(--mono)}
+.squeeze-verdict.wide{background:var(--s2);border-color:var(--border)}
+.squeeze-verdict.close{background:var(--amber-dim);border-color:rgba(245,166,35,0.3)}
+.squeeze-verdict.exact{background:var(--green-dim);border-color:rgba(45,222,152,0.3)}
+.squeeze-verdict.over{background:var(--red-dim);border-color:rgba(255,79,94,0.25)}
+.sv-main{font-family:var(--mono);font-size:15px;font-weight:700}
+.wide .sv-main,.over .sv-main{color:var(--text2)}
+.close .sv-main{color:var(--amber)}
+.exact .sv-main{color:var(--green);text-shadow:0 0 10px var(--green-glow)}
+.sv-sub{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:4px;letter-spacing:.5px}
 
-.reset-btn{
-  padding:7px 16px;border:1.5px solid var(--rule);border-radius:20px;
-  background:var(--paper);font-family:var(--font);font-size:13px;
-  font-weight:600;color:var(--ink3);cursor:pointer;margin-bottom:14px;
-  transition:all .12s
+/* ── RIGHT PANEL ── */
+#rpanel{
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--s1);
 }
-.reset-btn:hover{border-color:var(--ink3);color:var(--ink)}
-
-/* ── SQUEEZE TAB ─────────────────────────────────────── */
-.squeeze-stage{
-  background:var(--paper2);border:1.5px solid var(--rule);
-  border-radius:12px;padding:20px;margin-bottom:16px
+.rp-concept{
+  padding:18px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0;
 }
-#squeeze-canvas{display:block;width:100%;margin-bottom:18px}
-
-.squeeze-sliders{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:520px){.squeeze-sliders{grid-template-columns:1fr}}
-
-.slider-group{padding:14px;border-radius:10px;border:1.5px solid}
-.lo-group{background:var(--teal-bg);border-color:var(--teal2)}
-.hi-group{background:var(--rust-bg);border-color:#e0a898}
-.sg-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-.lo-group .sg-label{color:var(--teal)}
-.hi-group .sg-label{color:var(--rust)}
-.sg-val{font-family:var(--mono);font-size:26px;font-weight:800;margin-bottom:4px;line-height:1.1}
-.lo-group .sg-val{color:var(--teal)}
-.hi-group .sg-val{color:var(--rust)}
-.sg-sq{font-family:var(--mono);font-size:12px;color:var(--ink3);margin-bottom:10px}
-.sg-slider{width:100%;height:5px}
-.lo-group .sg-slider{accent-color:var(--teal)}
-.hi-group .sg-slider{accent-color:var(--rust)}
-
-.squeeze-result{
-  padding:14px 18px;border-radius:10px;text-align:center;
-  border:1.5px solid;transition:all .3s
+.rp-concept-lbl{
+  font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:7px;
 }
-.squeeze-result.wide {background:var(--paper2);border-color:var(--rule);color:var(--ink2)}
-.squeeze-result.close{background:var(--gold-bg);border-color:#e0c080;color:#6b4400}
-.squeeze-result.exact{background:var(--sage-bg);border-color:#8abcaa;color:var(--sage)}
-.sr-main{font-family:var(--mono);font-size:19px;font-weight:700}
-.sr-sub{font-size:12px;margin-top:5px;font-weight:600;font-family:var(--mono)}
-
-/* ── INSIGHT ─────────────────────────────────────────── */
-.insight{
-  background:var(--gold-bg);border:1px solid #e0c080;border-left:3px solid var(--gold);
-  border-radius:0 8px 8px 0;padding:12px 15px;font-size:13px;color:#6b4400;
-  line-height:1.65;margin-top:4px
+.rp-concept-lbl::before{content:'';width:10px;height:1.5px;background:var(--green);display:block}
+.rp-concept-text{
+  font-family:var(--serif);font-style:italic;font-size:13px;
+  color:var(--text2);line-height:1.75;
 }
-.insight strong{color:#4a2e00}
+.rp-concept-text strong{font-style:normal;font-family:var(--sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text)}
+
+.rp-scroll{flex:1;overflow-y:auto;padding:16px 20px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+
+/* Factor decomposition */
+.factor-section{margin-bottom:18px}
+.factor-title{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.factor-grid{display:flex;flex-wrap:wrap;gap:6px}
+.factor-chip{
+  padding:5px 12px;border-radius:20px;border:1px solid;
+  font-family:var(--mono);font-size:13px;font-weight:700;
+}
+
+/* Root assembly */
+.root-section{margin-bottom:18px}
+.root-display{
+  display:flex;align-items:center;flex-wrap:wrap;gap:5px;
+  padding:12px 14px;border:1px solid var(--border2);border-radius:8px;
+  background:var(--s2);min-height:52px;
+}
+.rd-label{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-right:4px}
+.rd-bubble{
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:14px;font-weight:700;
+}
+.rd-op{font-family:var(--mono);font-size:16px;color:var(--text3)}
+.rd-result{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--green);margin-left:4px;text-shadow:0 0 12px var(--green-glow)}
+
+/* Verdict card */
+.verdict-card{
+  padding:14px 16px;border-radius:8px;border:1px solid;text-align:center;
+  transition:all .3s;margin-bottom:12px;
+}
+.verdict-card.pending{background:var(--s2);border-color:var(--border)}
+.verdict-card.success{background:var(--green-dim);border-color:rgba(45,222,152,0.3)}
+.verdict-card.fail{background:var(--red-dim);border-color:rgba(255,79,94,0.25)}
+.vc-main{font-family:var(--mono);font-size:20px;font-weight:700}
+.pending .vc-main{color:var(--text3)}
+.success .vc-main{color:var(--green);text-shadow:0 0 12px var(--green-glow)}
+.fail .vc-main{color:var(--red)}
+.vc-sub{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:4px;letter-spacing:.5px}
+
+/* insight */
+.insight-box{
+  padding:12px 14px;border-radius:8px;background:var(--amber-dim);
+  border:1px solid rgba(245,166,35,0.2);
+}
+.insight-box p{font-family:var(--serif);font-style:italic;font-size:12.5px;color:rgba(245,166,35,0.8);line-height:1.7}
+.insight-box strong{font-style:normal;font-family:var(--sans);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--amber)}
+
+/* grain */
+#grain{position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.02;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 </style>
 </head>
 <body>
-<div class="app">
+<div id="grain"></div>
+<div id="shell">
 
-  <div class="header">
-    <div class="chapter-badge">
-      <div class="badge-num">1</div>
-      Chapter 1 · A Square and A Cube
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="tb-pill">Ch·1</div>
+    <div class="tb-title">Square <em>Root</em> Finder</div>
+    <div class="tb-spacer"></div>
+    <div class="presets-wrap">
+      <span style="font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3)">Try:</span>
+      <button class="preset-btn" data-n="324">324</button>
+      <button class="preset-btn" data-n="576">576</button>
+      <button class="preset-btn" data-n="1156">1156</button>
+      <button class="preset-btn" data-n="156">156</button>
+      <button class="preset-btn" data-n="2800">2800</button>
     </div>
-    <h1>Square Root Finder</h1>
-    <p class="header-sub">Break any number into prime factors and pair them up — each pair contributes one factor to the square root. Or squeeze two bounds until they trap the root.</p>
-  </div>
-
-  <!-- Number picker -->
-  <div class="card">
-    <div class="input-row">
-      <input type="number" class="num-input" id="num-input" value="324" min="1" max="99999">
+    <div class="tb-num-wrap">
+      <span class="tb-num-label">n =</span>
+      <input type="number" id="tb-num-input" value="324" min="1" max="9999">
       <button class="go-btn" id="go-btn">Find √</button>
     </div>
-    <div class="presets">
-      <span class="preset-lbl">Try:</span>
-      <button class="preset" data-n="576">576</button>
-      <button class="preset" data-n="324">324</button>
-      <button class="preset" data-n="441">441</button>
-      <button class="preset" data-n="1156">1156</button>
-      <button class="preset" data-n="156">156</button>
-      <button class="preset" data-n="2800">2800</button>
-      <button class="preset" data-n="9408">9408</button>
-    </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="card">
-    <div class="tabs">
-      <button class="tab active" data-tab="pair">Drag to pair factors</button>
-      <button class="tab" data-tab="squeeze">Squeeze the interval</button>
-    </div>
+  <!-- BODY -->
+  <div id="body">
 
-    <!-- ══ PAIR TAB ══ -->
-    <div class="view active" id="view-pair">
-      <div class="concept">
-        <strong>The pairing method:</strong> Every prime factor of a perfect square appears an <em>even</em> number of times. Drag matching bubbles onto each other — each pair that snaps together contributes one factor to the root. Any bubble left without a partner means the number is not a perfect square.
-      </div>
-
-      <div class="pair-stage-wrap">
-        <canvas id="pair-canvas"></canvas>
-        <div class="pair-banner" id="pair-banner">Drag matching bubbles together to pair them</div>
-      </div>
-
-      <button class="reset-btn" id="reset-btn">Reset bubbles</button>
-
-      <div class="root-row" id="root-row">
-        <span class="root-label">Root =</span>
-        <span style="color:var(--ink3);font-family:var(--mono);font-size:13px">pair up factors to see…</span>
-      </div>
-
-      <div class="result-strip pending" id="result-strip">
-        <div class="rs-val" id="rs-val">—</div>
-        <div class="rs-sub" id="rs-sub">Pair up all factors to find the square root</div>
-      </div>
-    </div>
-
-    <!-- ══ SQUEEZE TAB ══ -->
-    <div class="view" id="view-squeeze">
-      <div class="concept">
-        <strong>The squeezing method:</strong> We know √n lies between two consecutive whole numbers. Move the blue lower bound up and the red upper bound down — whenever lo² &lt; n &lt; hi², the root is trapped inside. When lo and hi are just 1 apart, you have found the exact position of √n on the number line.
-      </div>
-
-      <div class="squeeze-stage">
-        <canvas id="squeeze-canvas" height="100"></canvas>
-        <div class="squeeze-sliders">
-          <div class="slider-group lo-group">
-            <div class="sg-label">Lower bound</div>
-            <div class="sg-val" id="lo-val">1</div>
-            <div class="sg-sq" id="lo-sq">1² = 1</div>
-            <input type="range" class="sg-slider" id="lo-slider" min="0" max="316" value="1">
-          </div>
-          <div class="slider-group hi-group">
-            <div class="sg-label">Upper bound</div>
-            <div class="sg-val" id="hi-val">320</div>
-            <div class="sg-sq" id="hi-sq">320² = 102400</div>
-            <input type="range" class="sg-slider" id="hi-slider" min="1" max="317" value="320">
-          </div>
+    <!-- WORKBENCH -->
+    <div id="workbench">
+      <div class="wb-header">
+        <div class="wb-tab-strip">
+          <button class="wb-tab on" data-wb="pair">Pair Factors</button>
+          <button class="wb-tab" data-wb="squeeze">Squeeze Interval</button>
         </div>
-        <div class="squeeze-result wide" id="squeeze-result">
-          <div class="sr-main" id="sr-main">1 ≤ √n ≤ 320</div>
-          <div class="sr-sub" id="sr-sub">Squeeze the bounds closer…</div>
+        <button class="reset-tiny" id="reset-btn">↺ reset</button>
+      </div>
+
+      <!-- PAIR PANE -->
+      <div class="wb-pane on" id="pane-pair">
+        <div id="pair-wrap">
+          <canvas id="pair-canvas"></canvas>
+          <div class="pair-hint">Drag matching bubbles together to pair them</div>
         </div>
       </div>
 
-      <div class="insight">
-        <strong>Why this works:</strong> Square roots are monotone — if a² &lt; n &lt; b² then a &lt; √n &lt; b. Halving the gap each time (binary search) is exactly how calculators find square roots. Each squeeze step gives you one more decimal place of precision.
+      <!-- SQUEEZE PANE -->
+      <div class="wb-pane" id="pane-squeeze">
+        <div id="squeeze-wrap">
+          <canvas id="squeeze-canvas" height="130"></canvas>
+          <div class="sq-sliders">
+            <div class="sq-slider-card lo">
+              <div class="sc-label">Lower bound</div>
+              <div class="sc-val" id="lo-val">1</div>
+              <div class="sc-sq" id="lo-sq">1² = 1</div>
+              <input type="range" class="sc-range lo" id="lo-slider" min="0" max="100" value="1">
+            </div>
+            <div class="sq-slider-card hi">
+              <div class="sc-label">Upper bound</div>
+              <div class="sc-val" id="hi-val">100</div>
+              <div class="sc-sq" id="hi-sq">100² = 10000</div>
+              <input type="range" class="sc-range hi" id="hi-slider" min="1" max="101" value="100">
+            </div>
+          </div>
+          <div class="squeeze-verdict wide" id="squeeze-verdict">
+            <div class="sv-main" id="sv-main">Squeeze the bounds inward</div>
+            <div class="sv-sub" id="sv-sub">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div id="rpanel">
+      <div class="rp-concept">
+        <div class="rp-concept-lbl" id="rp-lbl">The pairing method</div>
+        <div class="rp-concept-text" id="rp-text">
+          Every prime factor of a perfect square appears an <strong>even</strong> number of times. Drag matching bubbles onto each other — each <strong>pair</strong> contributes one factor to the root.
+        </div>
+      </div>
+
+      <div class="rp-scroll">
+        <div class="factor-section">
+          <div class="factor-title">Prime factorisation</div>
+          <div class="factor-grid" id="factor-grid"></div>
+        </div>
+
+        <div class="root-section">
+          <div class="factor-title">Root assembly</div>
+          <div class="root-display" id="root-display">
+            <span class="rd-label">√n =</span>
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">pair factors to see…</span>
+          </div>
+        </div>
+
+        <div class="verdict-card pending" id="verdict-card">
+          <div class="vc-main" id="vc-main">—</div>
+          <div class="vc-sub" id="vc-sub">Pair all factors to determine the root</div>
+        </div>
+
+        <div class="insight-box">
+          <p><strong>Why pairing works</strong><br>
+          √(a²·b²·c²…) = a·b·c… Every pair becomes a single factor outside the root. A leftover unpaired prime means the number isn't a perfect square.</p>
+        </div>
       </div>
     </div>
 
@@ -311,542 +336,532 @@ h1{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--ink);lett
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════
-// PALETTE — matches CSS vars
-// ══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// PALETTE
+// ═══════════════════════════════════════════
 const BUBBLE_COLORS = [
-  '#1d6a72', // teal
-  '#b84a2a', // rust
-  '#c08030', // gold
-  '#3a6a48', // sage
-  '#6a4a90', // violet
-  '#2a5a8a', // ocean
-  '#a83060', // rose
+  '#2dde98','#5b9af6','#f5a623','#e879f9',
+  '#38bdf8','#fb923c','#a78bfa','#34d399',
 ];
+const BUBBLE_TEXT = ['#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f'];
 
-// ══════════════════════════════════════════════════════
+function hexForPrime(p, primes) {
+  const idx = primes.indexOf(p);
+  return BUBBLE_COLORS[idx % BUBBLE_COLORS.length];
+}
+
+// ═══════════════════════════════════════════
 // STATE
-// ══════════════════════════════════════════════════════
-let currentN   = 324;
-let bubbles    = [];
-let dragging   = null;
-let pairedGroups = [];
+// ═══════════════════════════════════════════
+let currentN = 324;
+let activeWb = 'pair';
+let bubbles = [], pairedGroups = [], dragging = null;
+let sqzLo = 1, sqzHi = 100;
 
-// ══════════════════════════════════════════════════════
-// TABS
-// ══════════════════════════════════════════════════════
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('view-' + tab.dataset.tab).classList.add('active');
-    if (tab.dataset.tab === 'squeeze') initSqueeze();
-    if (tab.dataset.tab === 'pair')    initPair();
-  });
-});
-
-// ══════════════════════════════════════════════════════
-// NUMBER INPUT
-// ══════════════════════════════════════════════════════
-document.getElementById('go-btn').addEventListener('click', () => {
-  const v = parseInt(document.getElementById('num-input').value);
-  if (v >= 1 && v <= 99999) { currentN = v; initPair(); initSqueeze(); }
-});
-document.querySelectorAll('.preset').forEach(b => {
-  b.addEventListener('click', () => {
-    currentN = parseInt(b.dataset.n);
-    document.getElementById('num-input').value = currentN;
-    initPair(); initSqueeze();
-  });
-});
-document.getElementById('reset-btn').addEventListener('click', () => initPair());
-
-// ══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // PRIME FACTORISATION
-// ══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function primeFactors(n) {
-  const f = []; let d = 2;
-  while (n > 1) { while (n % d === 0) { f.push(d); n = Math.floor(n / d); } d++; }
+  const f=[]; let d=2;
+  while(n>1){while(n%d===0){f.push(d);n=Math.floor(n/d);}d++;}
   return f;
 }
-
-// ══════════════════════════════════════════════════════
-// PAIR TAB — canvas drag
-// ══════════════════════════════════════════════════════
-const pairCanvas = document.getElementById('pair-canvas');
-const pctx       = pairCanvas.getContext('2d');
-const PR         = Math.min(window.devicePixelRatio || 1, 2);
-const BUBBLE_R   = 26;
-const SNAP_DIST  = 72;
-
-function resizePairCanvas(targetH) {
-  const wrap = pairCanvas.parentElement;
-  const w    = wrap.clientWidth;
-  // targetH is computed from bubble layout; fall back to 160 minimum
-  const h    = targetH || 160;
-  pairCanvas.style.width  = w + 'px';
-  pairCanvas.style.height = h + 'px';
-  pairCanvas.width        = w * PR;
-  pairCanvas.height       = h * PR;
-  pctx.resetTransform();
-  pctx.scale(PR, PR);
-  drawPair();
+function uniquePrimes(factors) {
+  return [...new Set(factors)].sort((a,b)=>a-b);
 }
 
-function initPair() {
-  const factors = primeFactors(currentN);
-  const counts  = {};
-  factors.forEach(f => counts[f] = (counts[f] || 0) + 1);
-  const primes  = Object.keys(counts).map(Number).sort((a, b) => a - b);
+// ═══════════════════════════════════════════
+// NUMBER INPUT
+// ═══════════════════════════════════════════
+function setN(n) {
+  if(n<1||n>9999)return;
+  currentN=n;
+  document.getElementById('tb-num-input').value=n;
+  initPair();
+  initSqueeze();
+  updateFactorPanel();
+}
 
-  bubbles      = [];
-  pairedGroups = [];
-  dragging     = null;
+document.getElementById('go-btn').addEventListener('click',()=>setN(+document.getElementById('tb-num-input').value));
+document.getElementById('tb-num-input').addEventListener('keydown',e=>{ if(e.key==='Enter') setN(+e.target.value); });
+document.querySelectorAll('.preset-btn').forEach(b=>b.addEventListener('click',()=>setN(+b.dataset.n)));
+document.getElementById('reset-btn').addEventListener('click',()=>{ if(activeWb==='pair')initPair(); else initSqueeze(); });
 
-  const wrap   = pairCanvas.parentElement;
-  const W      = wrap.clientWidth || 600;
-  const GAP_X  = BUBBLE_R * 2 + 16;   // horizontal spacing
-  const GAP_Y  = BUBBLE_R * 2 + 22;   // vertical spacing
-  const PAD_X  = 32;                   // left padding
-  const PAD_Y  = 48;                   // top padding
-  const PAD_BOT = 28;                  // bottom padding
+// ═══════════════════════════════════════════
+// WORKBENCH TABS
+// ═══════════════════════════════════════════
+document.querySelectorAll('.wb-tab').forEach(b=>b.addEventListener('click',()=>{
+  activeWb=b.dataset.wb;
+  document.querySelectorAll('.wb-tab').forEach(t=>t.classList.toggle('on',t===b));
+  document.querySelectorAll('.wb-pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+activeWb));
+  updateConceptPanel();
+}));
 
-  // How many bubbles fit per row?
-  const cols = Math.max(1, Math.min(factors.length, Math.floor((W - PAD_X * 2) / GAP_X)));
+function updateConceptPanel(){
+  const lbl=document.getElementById('rp-lbl');
+  const txt=document.getElementById('rp-text');
+  if(activeWb==='pair'){
+    lbl.textContent='The pairing method';
+    txt.innerHTML='Every prime factor of a perfect square appears an <strong>even</strong> number of times. Drag matching bubbles onto each other — each <strong>pair</strong> contributes one factor to the root.';
+  } else {
+    lbl.textContent='The squeezing method';
+    txt.innerHTML='√n lies between two consecutive whole numbers. Move the bounds inward — when lo² &lt; n &lt; hi², the root is <strong>trapped</strong>. Closing the gap by 1 gives its exact position.';
+  }
+}
 
-  let idx = 0, colorIdx = 0;
-  primes.forEach(p => {
-    const c = BUBBLE_COLORS[colorIdx % BUBBLE_COLORS.length];
-    for (let k = 0; k < counts[p]; k++) {
-      const col = idx % cols;
-      const row = Math.floor(idx / cols);
+// ═══════════════════════════════════════════
+// PAIR TAB
+// ═══════════════════════════════════════════
+const pairCanvas=document.getElementById('pair-canvas');
+const pctx=pairCanvas.getContext('2d');
+const PR=Math.min(devicePixelRatio||1,2);
+const BR=28, SNAP=68;
+
+function initPair(){
+  const factors=primeFactors(currentN);
+  const counts={};
+  factors.forEach(f=>counts[f]=(counts[f]||0)+1);
+  const primes=uniquePrimes(factors);
+  bubbles=[]; pairedGroups=[]; dragging=null;
+
+  const wrap=document.getElementById('pair-wrap');
+  const W=wrap.clientWidth||500;
+  const H=wrap.clientHeight||400;
+  const GAP_X=BR*2+18, GAP_Y=BR*2+24;
+  const PAD_X=40, PAD_Y=50;
+  const cols=Math.max(1,Math.min(factors.length,Math.floor((W-PAD_X*2)/GAP_X)));
+  let idx=0,ci=0;
+
+  primes.forEach(p=>{
+    const col=BUBBLE_COLORS[ci%BUBBLE_COLORS.length];
+    for(let k=0;k<counts[p];k++){
       bubbles.push({
-        id: idx, prime: p, color: c,
-        x: PAD_X + BUBBLE_R + col * GAP_X,
-        y: PAD_Y + BUBBLE_R + row * GAP_Y,
-        paired: false, pairedWith: null,
-        shake: 0, unpairable: false,
+        id:idx,prime:p,color:col,
+        x:PAD_X+BR+(idx%cols)*GAP_X,
+        y:PAD_Y+BR+Math.floor(idx/cols)*GAP_Y,
+        homeX:PAD_X+BR+(idx%cols)*GAP_X,
+        homeY:PAD_Y+BR+Math.floor(idx/cols)*GAP_Y,
+        paired:false,pairedWith:null,unpairable:false,shake:0,
       });
       idx++;
     }
-    colorIdx++;
+    ci++;
   });
 
-  // Height = exactly what the layout needs, nothing more
-  const numRows  = Math.ceil(factors.length / cols);
-  const neededH  = PAD_Y + numRows * GAP_Y + PAD_BOT;
-
-  updateResultStrip();
-  resizePairCanvas(neededH);
+  resizePair();
+  updateFactorPanel();
+  updateVerdictCard();
+  drawPair();
 }
 
-function drawPair() {
-  const W = pairCanvas.clientWidth;
-  const H = pairCanvas.clientHeight;
-  pctx.clearRect(0, 0, W, H);
+function resizePair(){
+  const wrap=document.getElementById('pair-wrap');
+  pairCanvas.width=wrap.clientWidth*PR;
+  pairCanvas.height=wrap.clientHeight*PR;
+  pairCanvas.style.width=wrap.clientWidth+'px';
+  pairCanvas.style.height=wrap.clientHeight+'px';
+  pctx.resetTransform();pctx.scale(PR,PR);
+}
 
-  // Background
-  pctx.fillStyle = '#f3f0ea';
-  pctx.fillRect(0, 0, W, H);
+function drawPair(){
+  const W=pairCanvas.clientWidth, H=pairCanvas.clientHeight;
+  pctx.clearRect(0,0,W,H);
 
-  // Pair connection lines
-  pairedGroups.forEach(g => {
-    if (g.bubbleIds.length !== 2) return;
-    const b1 = bubbles.find(b => b.id === g.bubbleIds[0]);
-    const b2 = bubbles.find(b => b.id === g.bubbleIds[1]);
-    if (!b1 || !b2) return;
-    pctx.strokeStyle = g.color + '70';
-    pctx.lineWidth   = 3;
-    pctx.setLineDash([5, 4]);
-    pctx.beginPath(); pctx.moveTo(b1.x, b1.y); pctx.lineTo(b2.x, b2.y); pctx.stroke();
-    pctx.setLineDash([]);
+  // Dark grid dots
+  pctx.fillStyle='rgba(255,255,255,0.03)';
+  for(let x=20;x<W;x+=28) for(let y=20;y<H;y+=28) { pctx.beginPath();pctx.arc(x,y,1,0,Math.PI*2);pctx.fill(); }
+
+  // Pair connection arcs
+  pairedGroups.forEach(g=>{
+    if(g.bubbleIds.length!==2)return;
+    const b1=bubbles.find(b=>b.id===g.bubbleIds[0]);
+    const b2=bubbles.find(b=>b.id===g.bubbleIds[1]);
+    if(!b1||!b2)return;
+    pctx.beginPath();
+    const mx=(b1.x+b2.x)/2, my=(b1.y+b2.y)/2-18;
+    pctx.moveTo(b1.x,b1.y);
+    pctx.quadraticCurveTo(mx,my,b2.x,b2.y);
+    pctx.strokeStyle=g.color+'55';pctx.lineWidth=2.5;
+    pctx.setLineDash([4,4]);pctx.stroke();pctx.setLineDash([]);
   });
 
   // Snap halo
-  if (dragging !== null) {
-    const db = bubbles.find(b => b.id === dragging.id);
-    if (db) {
-      bubbles.forEach(b => {
-        if (b.paired || b.id === db.id || b.prime !== db.prime) return;
-        const dist = Math.hypot(db.x - b.x, db.y - b.y);
-        if (dist < SNAP_DIST) {
-          pctx.beginPath(); pctx.arc(b.x, b.y, BUBBLE_R + 9, 0, Math.PI * 2);
-          pctx.fillStyle   = b.color + '28'; pctx.fill();
-          pctx.strokeStyle = b.color; pctx.lineWidth = 2.5; pctx.stroke();
-        }
-      });
-    }
+  if(dragging!==null){
+    const db=bubbles.find(b=>b.id===dragging.id);
+    if(db) bubbles.forEach(b=>{
+      if(b.paired||b.id===db.id||b.prime!==db.prime)return;
+      const d=Math.hypot(db.x-b.x,db.y-b.y);
+      if(d<SNAP){
+        pctx.beginPath();pctx.arc(b.x,b.y,BR+10,0,Math.PI*2);
+        pctx.fillStyle=b.color+'20';pctx.fill();
+        pctx.strokeStyle=b.color;pctx.lineWidth=2;pctx.stroke();
+      }
+    });
   }
 
-  // Bubbles — dragged last (on top)
-  bubbles.forEach(b => { if (!dragging || b.id !== dragging.id) drawBubble(b); });
-  if (dragging) { const db = bubbles.find(b => b.id === dragging.id); if (db) drawBubble(db, true); }
+  // Draw all bubbles (dragged on top)
+  bubbles.forEach(b=>{ if(!dragging||b.id!==dragging.id) drawBubble(b); });
+  if(dragging){ const db=bubbles.find(b=>b.id===dragging.id);if(db)drawBubble(db,true); }
 }
 
-function drawBubble(b, lifted = false) {
-  const ox = b.shake > 0 ? Math.sin(b.shake * 0.8) * 4 : 0;
-  const x  = b.x + ox;
-  const y  = b.y;
+function drawBubble(b,lifted=false){
+  const ox=b.shake>0?Math.sin(b.shake*.9)*5:0;
+  const x=b.x+ox, y=b.y;
 
-  if (lifted) {
-    pctx.shadowColor    = 'rgba(28,26,22,0.22)';
-    pctx.shadowBlur     = 18;
-    pctx.shadowOffsetY  = 6;
+  if(lifted){ pctx.shadowColor='rgba(0,0,0,0.5)';pctx.shadowBlur=20;pctx.shadowOffsetY=8; }
+
+  // Glow ring for paired
+  if(b.paired){
+    pctx.beginPath();pctx.arc(x,y,BR+6,0,Math.PI*2);
+    pctx.strokeStyle=b.color+'60';pctx.lineWidth=2;
+    pctx.setLineDash([3,3]);pctx.stroke();pctx.setLineDash([]);
   }
 
-  // Fill
-  pctx.beginPath(); pctx.arc(x, y, BUBBLE_R, 0, Math.PI * 2);
-  pctx.fillStyle = b.unpairable ? '#b84a2a' : b.color;
-  pctx.fill();
+  // Body
+  const grad=pctx.createRadialGradient(x-BR*.25,y-BR*.25,0,x,y,BR);
+  grad.addColorStop(0,b.unpairable?'#ff4f5e':lifted?lighten(b.color,.15):b.color);
+  grad.addColorStop(1,b.unpairable?'#cc1a28':darken(b.color,.3));
+  pctx.beginPath();pctx.arc(x,y,BR,0,Math.PI*2);
+  pctx.fillStyle=grad;pctx.fill();
 
-  // Ring
-  pctx.strokeStyle = 'rgba(255,255,255,0.35)';
-  pctx.lineWidth   = 2;
-  pctx.stroke();
+  pctx.shadowColor='transparent';pctx.shadowBlur=0;pctx.shadowOffsetY=0;
 
-  pctx.shadowColor = 'transparent'; pctx.shadowBlur = 0; pctx.shadowOffsetY = 0;
+  // Top highlight
+  pctx.beginPath();pctx.arc(x-BR*.2,y-BR*.25,BR*.45,0,Math.PI*2);
+  pctx.fillStyle='rgba(255,255,255,0.12)';pctx.fill();
 
   // Label
-  pctx.font         = `bold ${BUBBLE_R > 22 ? 20 : 16}px DM Mono, monospace`;
-  pctx.fillStyle    = '#fff';
-  pctx.textAlign    = 'center';
-  pctx.textBaseline = 'middle';
-  pctx.fillText(b.prime, x, y);
+  pctx.font=`700 ${BR>24?18:14}px Space Mono,monospace`;
+  pctx.fillStyle=b.unpairable?'#fff':'rgba(10,12,15,0.9)';
+  pctx.textAlign='center';pctx.textBaseline='middle';
+  pctx.fillText(b.prime,x,y);
 
-  // Paired dashed ring
-  if (b.paired) {
-    pctx.beginPath(); pctx.arc(x, y, BUBBLE_R + 5, 0, Math.PI * 2);
-    pctx.strokeStyle = b.color + 'aa'; pctx.lineWidth = 2.5;
-    pctx.setLineDash([4, 3]); pctx.stroke(); pctx.setLineDash([]);
+  // ✓ badge if paired
+  if(b.paired){
+    pctx.beginPath();pctx.arc(x+BR*.65,y-BR*.65,8,0,Math.PI*2);
+    pctx.fillStyle=b.color;pctx.fill();
+    pctx.font='700 9px Space Mono';pctx.fillStyle='rgba(10,12,15,0.9)';
+    pctx.textAlign='center';pctx.textBaseline='middle';
+    pctx.fillText('✓',x+BR*.65,y-BR*.65);
   }
-
-  // Unpairable ✗
-  if (b.unpairable) {
-    pctx.strokeStyle = 'rgba(255,255,255,.9)'; pctx.lineWidth = 3; pctx.lineCap = 'round';
-    const s = 9;
-    pctx.beginPath();
-    pctx.moveTo(x - s, y + s); pctx.lineTo(x + s, y - s);
-    pctx.moveTo(x + s, y + s); pctx.lineTo(x - s, y - s);
-    pctx.stroke();
+  // ✗ if unpairable
+  if(b.unpairable){
+    pctx.strokeStyle='rgba(255,255,255,.9)';pctx.lineWidth=2.5;pctx.lineCap='round';
+    const s=8;
+    pctx.beginPath();pctx.moveTo(x-s,y+s);pctx.lineTo(x+s,y-s);pctx.stroke();
+    pctx.beginPath();pctx.moveTo(x+s,y+s);pctx.lineTo(x-s,y-s);pctx.stroke();
   }
 }
 
-// Pointer events on canvas
-pairCanvas.addEventListener('pointerdown', e => {
-  const rect = pairCanvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  for (let i = bubbles.length - 1; i >= 0; i--) {
-    const b = bubbles[i];
-    if (b.unpairable) continue;
-    if (Math.hypot(mx - b.x, my - b.y) < BUBBLE_R) {
-      dragging = { id: b.id, offsetX: mx - b.x, offsetY: my - b.y };
+function lighten(hex,amt){ return hex }
+function darken(hex,amt){
+  let n=parseInt(hex.slice(1),16);
+  let r=Math.max(0,((n>>16)&255)-Math.round(amt*255));
+  let g=Math.max(0,((n>>8)&255)-Math.round(amt*255));
+  let b=Math.max(0,(n&255)-Math.round(amt*255));
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+
+// Pointer events
+pairCanvas.addEventListener('pointerdown',e=>{
+  const r=pairCanvas.getBoundingClientRect();
+  const mx=e.clientX-r.left, my=e.clientY-r.top;
+  for(let i=bubbles.length-1;i>=0;i--){
+    const b=bubbles[i];
+    if(b.unpairable)continue;
+    if(Math.hypot(mx-b.x,my-b.y)<BR){
+      dragging={id:b.id,ox:mx-b.x,oy:my-b.y};
       pairCanvas.setPointerCapture(e.pointerId);
-      if (b.paired) {
-        const gi = pairedGroups.findIndex(g => g.bubbleIds.includes(b.id));
-        if (gi >= 0) {
-          pairedGroups[gi].bubbleIds.forEach(bid => {
-            const bub = bubbles.find(bb => bb.id === bid);
-            if (bub) { bub.paired = false; bub.pairedWith = null; }
+      if(b.paired){
+        const gi=pairedGroups.findIndex(g=>g.bubbleIds.includes(b.id));
+        if(gi>=0){
+          pairedGroups[gi].bubbleIds.forEach(bid=>{
+            const bb=bubbles.find(x=>x.id===bid);
+            if(bb){bb.paired=false;bb.pairedWith=null;}
           });
-          pairedGroups.splice(gi, 1);
-          updateResultStrip();
+          pairedGroups.splice(gi,1);
+          updateVerdictCard();
         }
       }
       break;
     }
   }
 });
-
-pairCanvas.addEventListener('pointermove', e => {
-  if (dragging === null) return;
-  const rect = pairCanvas.getBoundingClientRect();
-  const b    = bubbles.find(bb => bb.id === dragging.id);
-  if (b) { b.x = e.clientX - rect.left - dragging.offsetX; b.y = e.clientY - rect.top - dragging.offsetY; }
+pairCanvas.addEventListener('pointermove',e=>{
+  if(dragging===null)return;
+  const r=pairCanvas.getBoundingClientRect();
+  const b=bubbles.find(x=>x.id===dragging.id);
+  if(b){b.x=e.clientX-r.left-dragging.ox;b.y=e.clientY-r.top-dragging.oy;}
   drawPair();
 });
-
-pairCanvas.addEventListener('pointerup', () => {
-  if (dragging === null) return;
-  const db = bubbles.find(b => b.id === dragging.id);
-  if (db) {
-    let snapped = false;
-    for (const target of bubbles) {
-      if (target.id === db.id || target.paired || target.prime !== db.prime) continue;
-      if (Math.hypot(db.x - target.x, db.y - target.y) < SNAP_DIST) {
-        const midX = (db.x + target.x) / 2;
-        const midY = (db.y + target.y) / 2;
-        db.x = midX - BUBBLE_R - 4; db.y = midY;
-        target.x = midX + BUBBLE_R + 4; target.y = midY;
-        db.paired = true; db.pairedWith = target.id;
-        target.paired = true; target.pairedWith = db.id;
-        pairedGroups.push({ prime: db.prime, color: db.color, bubbleIds: [db.id, target.id] });
-        snapped = true;
-        // Pulse animation
-        let t = 0; const anim = () => { t++; drawPair(); if (t < 8) requestAnimationFrame(anim); };
+pairCanvas.addEventListener('pointerup',()=>{
+  if(dragging===null)return;
+  const db=bubbles.find(b=>b.id===dragging.id);
+  if(db){
+    let snapped=false;
+    for(const t of bubbles){
+      if(t.id===db.id||t.paired||t.prime!==db.prime)continue;
+      if(Math.hypot(db.x-t.x,db.y-t.y)<SNAP){
+        const mx=(db.x+t.x)/2, my=(db.y+t.y)/2;
+        db.x=mx-BR-3;db.y=my;
+        t.x=mx+BR+3;t.y=my;
+        db.paired=true;t.paired=true;
+        pairedGroups.push({prime:db.prime,color:db.color,bubbleIds:[db.id,t.id]});
+        snapped=true;
+        let f=0;const anim=()=>{f++;drawPair();if(f<6)requestAnimationFrame(anim);};
         requestAnimationFrame(anim);
         break;
       }
     }
-    if (!snapped && !db.paired) {
-      const canPair = bubbles.some(b => b.id !== db.id && !b.paired && b.prime === db.prime);
-      if (!canPair) {
-        db.shake = 20;
-        const shake = id => {
-          const b = bubbles.find(bb => bb.id === id);
-          if (!b || b.shake <= 0) return;
-          b.shake--; drawPair();
-          if (b.shake > 0) requestAnimationFrame(() => shake(id));
-          else { b.unpairable = true; drawPair(); }
+    if(!snapped&&!db.paired){
+      const canPair=bubbles.some(b=>b.id!==db.id&&!b.paired&&b.prime===db.prime);
+      if(!canPair){
+        db.shake=18;
+        const shake=id=>{
+          const b=bubbles.find(x=>x.id===id);
+          if(!b||b.shake<=0)return;
+          b.shake--;drawPair();
+          if(b.shake>0)requestAnimationFrame(()=>shake(id));
+          else{b.unpairable=true;drawPair();}
         };
         shake(db.id);
+      } else {
+        // Snap back home
+        db.x=db.homeX;db.y=db.homeY;
       }
     }
   }
-  dragging = null;
-  updateResultStrip();
+  dragging=null;
+  updateVerdictCard();
   drawPair();
 });
 
-function updateResultStrip() {
+// Factor panel
+function updateFactorPanel(){
+  const factors=primeFactors(currentN);
+  const counts={};
+  factors.forEach(f=>counts[f]=(counts[f]||0)+1);
+  const primes=uniquePrimes(factors);
+  const grid=document.getElementById('factor-grid');
+  grid.innerHTML='';
+  let idx=0;
+  primes.forEach(p=>{
+    const col=BUBBLE_COLORS[idx%BUBBLE_COLORS.length];
+    const chip=document.createElement('div');
+    chip.className='factor-chip';
+    chip.style.background=col+'18';
+    chip.style.borderColor=col+'50';
+    chip.style.color=col;
+    chip.textContent=`${p}${counts[p]>1?`^${counts[p]}`:''}`;
+    grid.appendChild(chip);
+    idx++;
+  });
+  const n=document.createElement('div');
+  n.className='factor-chip';
+  n.style.cssText='background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:rgba(221,228,238,0.5);font-size:11px';
+  n.textContent=`= ${currentN}`;
+  grid.appendChild(n);
+}
+
+function updateVerdictCard(){
   // Mark unpairable
-  bubbles.forEach(b => {
-    if (!b.paired) {
-      b.unpairable = !bubbles.some(bb => bb.id !== b.id && !bb.paired && bb.prime === b.prime);
-    } else {
-      b.unpairable = false;
-    }
+  bubbles.forEach(b=>{
+    if(!b.paired){
+      b.unpairable=!bubbles.some(bb=>bb.id!==b.id&&!bb.paired&&bb.prime===b.prime);
+    } else b.unpairable=false;
   });
 
-  const rootFactors  = pairedGroups.map(g => g.prime);
-  const unpairedLeft = bubbles.filter(b => !b.paired && b.unpairable);
-  const allDone      = bubbles.every(b => b.paired || b.unpairable);
+  const rootFactors=pairedGroups.map(g=>g.prime);
+  const unpairedLeft=bubbles.filter(b=>!b.paired&&b.unpairable);
+  const allDone=bubbles.every(b=>b.paired||b.unpairable);
 
-  // Root row
-  const rootRow = document.getElementById('root-row');
-  if (rootFactors.length === 0) {
-    rootRow.innerHTML = `<span class="root-label">Root =</span><span style="color:var(--ink3);font-family:var(--mono);font-size:13px">pair up factors to see…</span>`;
+  // Root display
+  const rd=document.getElementById('root-display');
+  if(rootFactors.length===0){
+    rd.innerHTML='<span class="rd-label">√n =</span><span style="font-family:var(--mono);font-size:11px;color:var(--text3)">pair factors to see…</span>';
   } else {
-    const rootVal = rootFactors.reduce((a, b) => a * b, 1);
-    let html = '<span class="root-label">Root =</span>';
-    pairedGroups.forEach((g, i) => {
-      if (i > 0) html += '<span class="root-times">×</span>';
-      html += `<div class="root-bubble" style="background:${g.color}">${g.prime}</div>`;
+    const rootVal=rootFactors.reduce((a,b)=>a*b,1);
+    let html='<span class="rd-label">√n =</span>';
+    pairedGroups.forEach((g,i)=>{
+      if(i>0)html+='<span class="rd-op">×</span>';
+      html+=`<div class="rd-bubble" style="background:${g.color};color:#0a0c0f">${g.prime}</div>`;
     });
-    if (unpairedLeft.length > 0) {
-      html += `<span class="root-eq" style="color:var(--rust)">+ unpaired:</span>`;
-      unpairedLeft.forEach(b => { html += `<div class="root-bubble" style="background:var(--rust)">${b.prime}</div>`; });
-    } else if (allDone) {
-      html += `<span class="root-eq">=</span><span class="root-ans">${rootVal}</span>`;
+    if(!allDone){}
+    else if(unpairedLeft.length===0){
+      html+=`<span class="rd-op">=</span><span class="rd-result">${rootVal}</span>`;
     }
-    rootRow.innerHTML = html;
+    rd.innerHTML=html;
   }
 
-  // Result strip
-  const strip = document.getElementById('result-strip');
-  const rsVal = document.getElementById('rs-val');
-  const rsSub = document.getElementById('rs-sub');
-  if (!allDone) {
-    strip.className = 'result-strip pending';
-    rsVal.textContent = '—';
-    rsSub.textContent = 'Pair up all factors to find the square root';
-    return;
+  // Verdict
+  const vc=document.getElementById('verdict-card');
+  const vcm=document.getElementById('vc-main');
+  const vcs=document.getElementById('vc-sub');
+  if(!allDone){
+    vc.className='verdict-card pending';vcm.textContent='—';
+    vcs.textContent='Pair all factors to determine the root';return;
   }
-  if (unpairedLeft.length === 0) {
-    const root = rootFactors.reduce((a, b) => a * b, 1);
-    strip.className = 'result-strip success';
-    rsVal.textContent = `√${currentN} = ${root}`;
-    rsSub.textContent = 'All factors paired — perfect square ✓';
+  if(unpairedLeft.length===0){
+    const root=rootFactors.reduce((a,b)=>a*b,1);
+    vc.className='verdict-card success';
+    vcm.textContent=`√${currentN} = ${root}`;
+    vcs.textContent='All factors paired — perfect square ✓';
   } else {
-    strip.className = 'result-strip fail';
-    const unpairedPrimes = unpairedLeft.map(b => b.prime);
-    const toMul = unpairedPrimes.reduce((a, b) => a * b, 1);
-    rsVal.textContent = `${currentN} is not a perfect square`;
-    rsSub.textContent = `Leftover: ${unpairedPrimes.join(', ')}. Multiply by ${toMul} → ${currentN * toMul} has √ = ${Math.round(Math.sqrt(currentN * toMul))}`;
+    vc.className='verdict-card fail';
+    const up=unpairedLeft.map(b=>b.prime);
+    vcm.textContent=`Not a perfect square`;
+    vcs.textContent=`Leftover: ${up.join(', ')} — multiply by ${up.reduce((a,b)=>a*b,1)} to fix`;
   }
 }
 
-new ResizeObserver(() => {
-  // Rerun initPair layout with new width so column count + height recalculate
-  if (bubbles.length > 0) {
-    // Recompute positions with new width, preserving pair state
-    const wrap   = pairCanvas.parentElement;
-    const W      = wrap.clientWidth || 600;
-    const GAP_X  = BUBBLE_R * 2 + 16;
-    const GAP_Y  = BUBBLE_R * 2 + 22;
-    const PAD_X  = 32;
-    const PAD_Y  = 48;
-    const PAD_BOT = 28;
-    const cols   = Math.max(1, Math.min(bubbles.length, Math.floor((W - PAD_X * 2) / GAP_X)));
-    bubbles.forEach((b, i) => {
-      b.x = PAD_X + BUBBLE_R + (i % cols) * GAP_X;
-      b.y = PAD_Y + BUBBLE_R + Math.floor(i / cols) * GAP_Y;
-    });
-    const numRows = Math.ceil(bubbles.length / cols);
-    const neededH = PAD_Y + numRows * GAP_Y + PAD_BOT;
-    pctx.resetTransform();
-    pctx.scale(PR, PR);
-    resizePairCanvas(neededH);
-  }
-}).observe(pairCanvas.parentElement);
+new ResizeObserver(()=>{ resizePair();drawPair(); }).observe(document.getElementById('pair-wrap'));
 
-// ══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // SQUEEZE TAB
-// ══════════════════════════════════════════════════════
-const sqzCanvas = document.getElementById('squeeze-canvas');
-const sqzCtx    = sqzCanvas.getContext('2d');
-const sqzPR     = Math.min(window.devicePixelRatio || 1, 2);
-let sqzLo = 1, sqzHi = 320, sqzN = 324;
+// ═══════════════════════════════════════════
+const sqzCvs=document.getElementById('squeeze-canvas');
+const sqzCtx=sqzCvs.getContext('2d');
+const SQZ_PR=Math.min(devicePixelRatio||1,2);
 
-function initSqueeze() {
-  sqzN  = currentN;
-  const sq = Math.sqrt(sqzN);
-  sqzLo = 1;
-  sqzHi = Math.ceil(sq) + 5;
-  const maxVal = Math.ceil(Math.sqrt(99999)) + 2;
-  document.getElementById('lo-slider').max   = maxVal - 1;
-  document.getElementById('hi-slider').max   = maxVal;
-  document.getElementById('lo-slider').value = sqzLo;
-  document.getElementById('hi-slider').value = sqzHi;
+function initSqueeze(){
+  const sq=Math.sqrt(currentN);
+  sqzLo=1;sqzHi=Math.ceil(sq)+4;
+  const maxV=Math.ceil(Math.sqrt(9999))+2;
+  document.getElementById('lo-slider').max=maxV-1;
+  document.getElementById('hi-slider').max=maxV;
+  document.getElementById('lo-slider').value=sqzLo;
+  document.getElementById('hi-slider').value=sqzHi;
   updateSqueeze();
 }
 
-document.getElementById('lo-slider').addEventListener('input', e => {
-  sqzLo = +e.target.value;
-  if (sqzLo >= sqzHi) sqzLo = sqzHi - 1;
-  document.getElementById('lo-slider').value = sqzLo;
+document.getElementById('lo-slider').addEventListener('input',e=>{
+  sqzLo=+e.target.value;
+  if(sqzLo>=sqzHi)sqzLo=sqzHi-1;
+  document.getElementById('lo-slider').value=sqzLo;
   updateSqueeze();
 });
-document.getElementById('hi-slider').addEventListener('input', e => {
-  sqzHi = +e.target.value;
-  if (sqzHi <= sqzLo) sqzHi = sqzLo + 1;
-  document.getElementById('hi-slider').value = sqzHi;
+document.getElementById('hi-slider').addEventListener('input',e=>{
+  sqzHi=+e.target.value;
+  if(sqzHi<=sqzLo)sqzHi=sqzLo+1;
+  document.getElementById('hi-slider').value=sqzHi;
   updateSqueeze();
 });
 
-function updateSqueeze() {
-  const lo = sqzLo, hi = sqzHi, n = sqzN;
-  const sq = Math.sqrt(n);
-  document.getElementById('lo-val').textContent = lo;
-  document.getElementById('hi-val').textContent = hi;
-  document.getElementById('lo-sq').textContent  = `${lo}² = ${lo * lo}`;
-  document.getElementById('hi-sq').textContent  = `${hi}² = ${hi * hi}`;
-  drawSqueeze(lo, hi, n, sq);
+function updateSqueeze(){
+  const lo=sqzLo,hi=sqzHi,n=currentN,sq=Math.sqrt(n);
+  document.getElementById('lo-val').textContent=lo;
+  document.getElementById('hi-val').textContent=hi;
+  document.getElementById('lo-sq').textContent=`${lo}² = ${lo*lo}`;
+  document.getElementById('hi-sq').textContent=`${hi}² = ${hi*hi}`;
+  drawSqueeze(lo,hi,n,sq);
 
-  const res    = document.getElementById('squeeze-result');
-  const srMain = document.getElementById('sr-main');
-  const srSub  = document.getElementById('sr-sub');
-  const gap    = hi - lo;
+  const verd=document.getElementById('squeeze-verdict');
+  const vm=document.getElementById('sv-main');
+  const vs=document.getElementById('sv-sub');
+  const gap=hi-lo;
 
-  if (lo * lo === n) {
-    res.className = 'squeeze-result exact';
-    srMain.textContent = `√${n} = ${lo} exactly`;
-    srSub.textContent  = `${lo}² = ${lo * lo} = ${n} ✓`;
-  } else if (hi * hi === n) {
-    res.className = 'squeeze-result exact';
-    srMain.textContent = `√${n} = ${hi} exactly`;
-    srSub.textContent  = `${hi}² = ${hi * hi} = ${n} ✓`;
-  } else if (lo * lo > n) {
-    res.className = 'squeeze-result wide';
-    srMain.textContent = `${lo}² = ${lo * lo} > ${n} — lower bound too high`;
-    srSub.textContent  = 'Drag the teal slider down';
-  } else if (hi * hi < n) {
-    res.className = 'squeeze-result wide';
-    srMain.textContent = `${hi}² = ${hi * hi} < ${n} — upper bound too low`;
-    srSub.textContent  = 'Drag the rust slider up';
-  } else if (gap === 1) {
-    res.className = 'squeeze-result exact';
-    srMain.textContent = `${lo} < √${n} < ${hi}`;
-    srSub.textContent  = `${lo}² = ${lo*lo} < ${n} < ${hi*hi} = ${hi}² — perfectly squeezed! (≈ ${sq.toFixed(3)})`;
-  } else if (gap <= 3) {
-    res.className = 'squeeze-result close';
-    srMain.textContent = `${lo} ≤ √${n} ≤ ${hi}`;
-    srSub.textContent  = `Getting close — gap is ${gap}. Keep squeezing!`;
+  if(lo*lo===n){
+    verd.className='squeeze-verdict exact';vm.textContent=`√${n} = ${lo} exactly`;vs.textContent=`${lo}² = ${n} ✓`;
+  } else if(hi*hi===n){
+    verd.className='squeeze-verdict exact';vm.textContent=`√${n} = ${hi} exactly`;vs.textContent=`${hi}² = ${n} ✓`;
+  } else if(lo*lo>n){
+    verd.className='squeeze-verdict over';vm.textContent=`${lo}² = ${lo*lo} > ${n}`;vs.textContent='Lower bound too high — slide left';
+  } else if(hi*hi<n){
+    verd.className='squeeze-verdict over';vm.textContent=`${hi}² = ${hi*hi} < ${n}`;vs.textContent='Upper bound too low — slide right';
+  } else if(gap===1){
+    verd.className='squeeze-verdict exact';vm.textContent=`${lo} < √${n} < ${hi}  (≈${sq.toFixed(3)})`;vs.textContent=`Perfectly squeezed — gap = 1`;
+  } else if(gap<=4){
+    verd.className='squeeze-verdict close';vm.textContent=`${lo} ≤ √${n} ≤ ${hi}`;vs.textContent=`Gap = ${gap} — almost there!`;
   } else {
-    res.className = 'squeeze-result wide';
-    srMain.textContent = `${lo} ≤ √${n} ≤ ${hi}`;
-    srSub.textContent  = `Gap = ${gap}. Narrow the bounds inward.`;
+    verd.className='squeeze-verdict wide';vm.textContent=`${lo} ≤ √${n} ≤ ${hi}`;vs.textContent=`Gap = ${gap} — keep squeezing`;
   }
 }
 
-function drawSqueeze(lo, hi, n, sq) {
-  const wrap = sqzCanvas.parentElement;
-  const W    = wrap.clientWidth;
-  sqzCanvas.style.width  = W + 'px';
-  sqzCanvas.style.height = '124px';
-  sqzCanvas.width  = W * sqzPR;
-  sqzCanvas.height = 124 * sqzPR;
-  const ctx = sqzCtx;
-  ctx.resetTransform(); ctx.scale(sqzPR, sqzPR);
-  ctx.clearRect(0, 0, W, 124);
+function drawSqueeze(lo,hi,n,sq){
+  const wrap=document.getElementById('squeeze-wrap');
+  const W=wrap.clientWidth-48;
+  sqzCvs.style.width=W+'px';sqzCvs.style.height='130px';
+  sqzCvs.width=W*SQZ_PR;sqzCvs.height=130*SQZ_PR;
+  const ctx=sqzCtx;
+  ctx.resetTransform();ctx.scale(SQZ_PR,SQZ_PR);
+  ctx.clearRect(0,0,W,130);
+  ctx.fillStyle='#141820';ctx.fillRect(0,0,W,130);
 
-  // Warm background
-  ctx.fillStyle = '#f3f0ea'; ctx.fillRect(0, 0, W, 124);
+  const PAD=48,cW=W-2*PAD;
+  const vLo=Math.max(0,lo-2),vHi=hi+2;
+  const px=v=>PAD+(v-vLo)/(vHi-vLo)*cW;
+  const midY=65;
 
-  const PAD = 52, cW = W - 2 * PAD;
-  const viewLo = Math.max(0, lo - 2), viewHi = hi + 2;
-  const px = v => PAD + (v - viewLo) / (viewHi - viewLo) * cW;
+  // Interval fill
+  const inRange=lo*lo<=n&&hi*hi>=n;
+  const grad=ctx.createLinearGradient(px(lo),0,px(hi),0);
+  if(inRange){
+    grad.addColorStop(0,'rgba(91,154,246,0.15)');
+    grad.addColorStop(1,'rgba(255,79,94,0.15)');
+  } else {
+    grad.addColorStop(0,'rgba(255,79,94,0.12)');
+    grad.addColorStop(1,'rgba(255,79,94,0.12)');
+  }
+  ctx.fillStyle=grad;
+  ctx.fillRect(px(lo),midY-16,px(hi)-px(lo),32);
 
-  // Shaded interval
-  const inBounds = lo * lo <= n && hi * hi >= n;
-  ctx.fillStyle = inBounds ? 'rgba(58,106,72,.10)' : 'rgba(184,74,42,.10)';
-  ctx.fillRect(px(lo), 48, px(hi) - px(lo), 26);
+  // Axis
+  ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(PAD,midY);ctx.lineTo(W-PAD,midY);ctx.stroke();
 
-  // Axis line
-  ctx.strokeStyle = '#c8bfb5'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(PAD, 61); ctx.lineTo(W - PAD, 61); ctx.stroke();
-
-  // Ticks + labels
-  for (let i = Math.ceil(viewLo); i <= Math.floor(viewHi); i++) {
-    const x = px(i);
-    ctx.strokeStyle = '#d4cfc5'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x, 55); ctx.lineTo(x, 67); ctx.stroke();
-    ctx.font      = 'bold 10px DM Mono, monospace';
-    ctx.fillStyle = '#8a8580'; ctx.textAlign = 'center';
-    if (i === lo || i === hi || viewHi - viewLo <= 10)
-      ctx.fillText(`${i}²=${i*i}`, x, 30);
-    ctx.font = '10px DM Mono, monospace';
-    ctx.fillText(i, x, 82);
+  // Ticks
+  for(let i=Math.ceil(vLo);i<=Math.floor(vHi);i++){
+    const x=px(i);
+    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,midY-5);ctx.lineTo(x,midY+5);ctx.stroke();
+    if(vHi-vLo<=12||(i===lo||i===hi)){
+      ctx.font='bold 9px Space Mono';ctx.fillStyle='rgba(221,228,238,0.3)';
+      ctx.textAlign='center';ctx.fillText(i,x,midY+18);
+    }
   }
 
-  // True √n dashed line
-  const sqX = px(sq);
-  ctx.strokeStyle = '#3a6a48'; ctx.lineWidth = 2.5;
-  ctx.setLineDash([5, 4]);
-  ctx.beginPath(); ctx.moveTo(sqX, 18); ctx.lineTo(sqX, 104); ctx.stroke();
+  // True √n marker
+  const sqX=px(sq);
+  ctx.strokeStyle='#2dde98';ctx.lineWidth=2;
+  ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(sqX,midY-30);ctx.lineTo(sqX,midY+30);ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle = '#3a6a48'; ctx.font = 'bold 11px DM Mono, monospace';
-  ctx.textAlign = 'center'; ctx.fillText(`√${n}`, sqX, 13);
+  ctx.font='bold 10px Space Mono';ctx.fillStyle='#2dde98';
+  ctx.textAlign='center';ctx.fillText('√'+n,sqX,midY-36);
+  // glow dot
+  ctx.beginPath();ctx.arc(sqX,midY,5,0,Math.PI*2);
+  ctx.fillStyle='#2dde98';
+  ctx.shadowColor='#2dde98';ctx.shadowBlur=10;ctx.fill();
+  ctx.shadowBlur=0;
 
-  // lo dot (teal)
-  const loX = px(lo);
-  ctx.beginPath(); ctx.arc(loX, 61, 9, 0, Math.PI * 2);
-  ctx.fillStyle = '#1d6a72'; ctx.fill();
-  ctx.fillStyle = '#fff'; ctx.font = 'bold 10px DM Mono'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillText(lo, loX, 61);
+  // lo dot
+  const loX=px(lo);
+  ctx.beginPath();ctx.arc(loX,midY,10,0,Math.PI*2);
+  ctx.fillStyle='#5b9af6';ctx.fill();
+  ctx.font='bold 9px Space Mono';ctx.fillStyle='#0a0c0f';
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lo,loX,midY);
 
-  // hi dot (rust)
-  const hiX = px(hi);
-  ctx.beginPath(); ctx.arc(hiX, 61, 9, 0, Math.PI * 2);
-  ctx.fillStyle = '#b84a2a'; ctx.fill();
-  ctx.fillStyle = '#fff'; ctx.fillText(hi, hiX, 61);
-  ctx.textBaseline = 'alphabetic';
+  // hi dot
+  const hiX=px(hi);
+  ctx.beginPath();ctx.arc(hiX,midY,10,0,Math.PI*2);
+  ctx.fillStyle='#ff4f5e';ctx.fill();
+  ctx.fillStyle='#fff';ctx.fillText(hi,hiX,midY);
 
-  // Arrow nudges
-  if (loX < sqX - 14) { ctx.fillStyle = '#1d6a72'; ctx.font = '15px DM Sans'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('→', loX + 20, 61); }
-  if (hiX > sqX + 14) { ctx.fillStyle = '#b84a2a'; ctx.fillText('←', hiX - 20, 61); }
+  // squared labels
+  ctx.textBaseline='alphabetic';
+  ctx.font='9px Space Mono';ctx.fillStyle='rgba(91,154,246,0.7)';
+  ctx.textAlign='center';
+  if(vHi-vLo<=15)ctx.fillText(`${lo}²=${lo*lo}`,loX,midY-20);
+  ctx.fillStyle='rgba(255,79,94,0.7)';
+  if(vHi-vLo<=15)ctx.fillText(`${hi}²=${hi*hi}`,hiX,midY-20);
 }
 
-new ResizeObserver(() => {
-  if (document.getElementById('view-squeeze').classList.contains('active')) updateSqueeze();
-}).observe(sqzCanvas.parentElement);
+new ResizeObserver(()=>{ if(activeWb==='squeeze')updateSqueeze(); }).observe(document.getElementById('squeeze-wrap'));
 
-// ══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // INIT
-// ══════════════════════════════════════════════════════
-initPair();
-initSqueeze();
+// ═══════════════════════════════════════════
+setN(324);
 </script>
 </body>
 </html>
