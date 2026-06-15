@@ -5,101 +5,73 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Square Root Finder · Chapter 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0c0f;
-  --s1:#0f1218;
-  --s2:#141820;
-  --s3:#1a2030;
-  --border:rgba(255,255,255,0.06);
-  --border2:rgba(255,255,255,0.12);
-  --text:#dde4ee;
-  --text2:rgba(221,228,238,0.5);
-  --text3:rgba(221,228,238,0.25);
-  --green:#2dde98;
-  --green-dim:rgba(45,222,152,0.1);
-  --green-glow:rgba(45,222,152,0.35);
-  --red:#ff4f5e;
-  --red-dim:rgba(255,79,94,0.1);
-  --red-glow:rgba(255,79,94,0.3);
-  --blue:#5b9af6;
-  --blue-dim:rgba(91,154,246,0.1);
-  --amber:#f5a623;
-  --amber-dim:rgba(245,166,35,0.1);
-  --mono:'Space Mono',monospace;
-  --serif:'Instrument Serif',Georgia,serif;
-  --sans:'Syne',sans-serif;
+  --bg:#fdf8f0;--card:#fff;--ink:#1a1a1a;--ink2:#444;--ink3:#888;
+  --green:#1a9e5a;--red:#d94040;--blue:#2d7dd2;--amber:#d4920a;
+  --green-bg:rgba(26,158,90,0.12);--red-bg:rgba(217,64,64,0.1);
+  --blue-bg:rgba(45,125,210,0.12);--amber-bg:rgba(212,146,10,0.12);
+  --sans:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  --border:2px solid var(--ink);--radius:16px;
 }
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
 
-/* ── OUTER SHELL ── */
-#shell{position:fixed;inset:0;display:grid;grid-template-rows:56px 1fr;overflow:hidden}
+#shell{display:flex;flex-direction:column;height:100dvh;overflow:hidden}
 
-/* ── TOPBAR ── */
-#topbar{
-  background:var(--s1);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0;
+/* ── HEADER ── */
+.header{
+  padding:14px 24px 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0;
 }
-.tb-pill{
-  font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--green);padding:3px 10px;border:1px solid rgba(45,222,152,0.3);
-  border-radius:10px;background:var(--green-dim);
+.tag{font-family:var(--mono);font-size:14px;font-weight:500;padding:6px 14px;border-radius:24px;border:2px solid var(--green);background:var(--green-bg);color:var(--green)}
+.header h1{font-size:26px;font-weight:700;min-width:180px}
+.spacer{flex:1}
+.presets{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.preset-btn{
+  padding:8px 16px;background:var(--card);border:var(--border);border-radius:12px;
+  font-family:var(--mono);font-size:15px;font-weight:600;cursor:pointer;
+  min-height:44px;transition:all .12s;
 }
-.tb-title{font-family:var(--serif);font-size:19px;color:var(--text)}
-.tb-title em{font-style:italic;color:var(--green)}
-.tb-spacer{flex:1}
-.tb-num-wrap{display:flex;align-items:center;gap:8px}
-.tb-num-label{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3)}
+.preset-btn:hover{background:var(--green-bg);border-color:var(--green)}
+.num-wrap{display:flex;align-items:center;gap:8px}
+.num-wrap label{font-size:16px;font-weight:600}
 #tb-num-input{
-  background:var(--s2);border:1px solid var(--border2);border-radius:6px;
-  color:var(--text);font-family:var(--mono);font-size:18px;font-weight:700;
-  padding:4px 10px;width:110px;text-align:center;outline:none;
+  background:var(--card);border:var(--border);border-radius:12px;
+  color:var(--ink);font-family:var(--mono);font-size:22px;font-weight:700;
+  padding:8px 14px;width:120px;text-align:center;outline:none;
   transition:border-color .15s;
 }
 #tb-num-input:focus{border-color:var(--green)}
 .go-btn{
-  padding:5px 14px;background:var(--green);border:none;border-radius:6px;
-  color:var(--bg);font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;
+  padding:10px 20px;background:var(--green);border:2px solid var(--green);border-radius:12px;
+  color:#fff;font-family:var(--sans);font-size:16px;font-weight:700;
+  cursor:pointer;min-height:44px;transition:all .12s;
 }
-.go-btn:hover{filter:brightness(1.12)}
-.presets-wrap{display:flex;gap:5px;align-items:center}
-.preset-btn{
-  padding:3px 9px;background:transparent;border:1px solid var(--border2);
-  border-radius:4px;color:var(--text3);font-family:var(--mono);font-size:10px;
-  cursor:pointer;transition:all .12s;
-}
-.preset-btn:hover{border-color:var(--green);color:var(--green)}
+.go-btn:hover{filter:brightness(1.1)}
 
 /* ── BODY ── */
-#body{display:grid;grid-template-columns:1fr 320px;overflow:hidden;min-height:0}
+#body{flex:1;display:flex;overflow:hidden;border-top:2px solid var(--ink);min-height:0}
 
-/* ── WORKBENCH (left) ── */
-#workbench{
-  position:relative;overflow:hidden;
-  background:var(--s1);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-}
+/* ── WORKBENCH ── */
+#workbench{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#f2efe8}
 .wb-header{
-  padding:14px 20px 10px;border-bottom:1px solid var(--border);flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;border-bottom:2px solid var(--ink);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
 }
-.wb-tab-strip{display:flex;gap:2px}
+.wb-tabs{display:flex;gap:8px}
 .wb-tab{
-  padding:6px 14px;background:transparent;border:1px solid var(--border);
-  border-radius:5px;color:var(--text3);font-family:var(--mono);font-size:10px;
-  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;
+  padding:10px 20px;border:var(--border);border-radius:24px;
+  background:var(--card);font-family:var(--sans);font-size:15px;font-weight:600;
+  color:var(--ink2);cursor:pointer;min-height:44px;transition:all .12s;
 }
-.wb-tab:hover{color:var(--text2);border-color:var(--border2)}
-.wb-tab.on{background:var(--s3);border-color:var(--border2);color:var(--text)}
-.reset-tiny{
-  padding:5px 10px;background:transparent;border:1px solid var(--border);
-  border-radius:4px;color:var(--text3);font-family:var(--mono);font-size:10px;
-  letter-spacing:.8px;cursor:pointer;transition:all .12s;
+.wb-tab:hover{background:var(--green-bg)}
+.wb-tab.on{background:var(--green);color:#fff;border-color:var(--green)}
+.reset-btn{
+  padding:8px 16px;background:var(--card);border:var(--border);border-radius:12px;
+  font-size:14px;font-weight:600;cursor:pointer;transition:all .12s;
 }
-.reset-tiny:hover{border-color:var(--border2);color:var(--text2)}
+.reset-btn:hover{background:var(--bg)}
 
 .wb-pane{display:none;flex:1;position:relative;overflow:hidden}
 .wb-pane.on{display:flex;flex-direction:column}
@@ -109,206 +81,127 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 #pair-canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
 #pair-canvas:active{cursor:grabbing}
 .pair-hint{
-  position:absolute;top:12px;left:50%;transform:translateX(-50%);
-  font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--text3);pointer-events:none;white-space:nowrap;
-  background:rgba(10,12,15,0.8);padding:4px 12px;border-radius:12px;
-  border:1px solid var(--border);
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  font-size:15px;font-weight:600;color:var(--ink2);
+  background:rgba(253,248,240,0.9);padding:8px 18px;border-radius:24px;
+  border:2px solid #ddd;pointer-events:none;
 }
 
-/* squeeze canvas */
-#squeeze-wrap{
-  flex:1;display:flex;flex-direction:column;
-  padding:24px 24px 16px;gap:16px;overflow-y:auto;
-}
-#squeeze-canvas{display:block;width:100%;flex-shrink:0;border-radius:8px;overflow:hidden}
-.sq-sliders{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sq-slider-card{
-  padding:14px;border-radius:8px;border:1px solid;
-}
-.sq-slider-card.lo{background:var(--blue-dim);border-color:rgba(91,154,246,0.25)}
-.sq-slider-card.hi{background:var(--red-dim);border-color:rgba(255,79,94,0.25)}
-.sc-label{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
-.lo .sc-label{color:var(--blue)}
-.hi .sc-label{color:var(--red)}
-.sc-val{font-family:var(--mono);font-size:28px;font-weight:700;line-height:1;margin-bottom:3px}
-.lo .sc-val{color:var(--blue)}
-.hi .sc-val{color:var(--red)}
-.sc-sq{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px}
-.sc-range{width:100%;height:2px;-webkit-appearance:none;border-radius:1px;background:var(--border2);outline:none;cursor:pointer}
-.lo .sc-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px rgba(91,154,246,0.4);cursor:pointer}
-.hi .sc-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red-glow);cursor:pointer}
-
-.squeeze-verdict{
-  padding:12px 16px;border-radius:8px;border:1px solid;text-align:center;
-  transition:all .3s;flex-shrink:0;
-}
-.squeeze-verdict.wide{background:var(--s2);border-color:var(--border)}
-.squeeze-verdict.close{background:var(--amber-dim);border-color:rgba(245,166,35,0.3)}
-.squeeze-verdict.exact{background:var(--green-dim);border-color:rgba(45,222,152,0.3)}
-.squeeze-verdict.over{background:var(--red-dim);border-color:rgba(255,79,94,0.25)}
-.sv-main{font-family:var(--mono);font-size:15px;font-weight:700}
-.wide .sv-main,.over .sv-main{color:var(--text2)}
-.close .sv-main{color:var(--amber)}
-.exact .sv-main{color:var(--green);text-shadow:0 0 10px var(--green-glow)}
-.sv-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:.5px}
+/* squeeze */
+#squeeze-wrap{flex:1;display:flex;flex-direction:column;padding:24px;gap:16px;overflow-y:auto}
+#squeeze-canvas{display:block;width:100%;flex-shrink:0;border-radius:12px;overflow:hidden}
+.sq-sliders{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sq-slider-card{padding:18px;border-radius:var(--radius);border:var(--border)}
+.sq-slider-card.lo{background:var(--blue-bg);border-color:var(--blue)}
+.sq-slider-card.hi{background:var(--red-bg);border-color:var(--red)}
+.sc-label{font-size:14px;font-weight:600;margin-bottom:6px}
+.lo .sc-label{color:var(--blue)}.hi .sc-label{color:var(--red)}
+.sc-val{font-family:var(--mono);font-size:32px;font-weight:700;line-height:1;margin-bottom:4px}
+.lo .sc-val{color:var(--blue)}.hi .sc-val{color:var(--red)}
+.sc-sq{font-family:var(--mono);font-size:14px;color:var(--ink3);margin-bottom:12px}
+.sc-range{width:100%;height:8px;-webkit-appearance:none;border-radius:4px;background:#e0dcd4;outline:none;cursor:pointer}
+.lo .sc-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--blue);border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
+.hi .sc-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--red);border:3px solid #fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
+.squeeze-verdict{padding:16px 20px;border-radius:var(--radius);border:var(--border);text-align:center;transition:all .3s}
+.squeeze-verdict.wide{background:var(--card)}
+.squeeze-verdict.close{background:var(--amber-bg);border-color:var(--amber)}
+.squeeze-verdict.exact{background:var(--green-bg);border-color:var(--green)}
+.squeeze-verdict.over{background:var(--red-bg);border-color:var(--red)}
+.sv-main{font-family:var(--mono);font-size:20px;font-weight:700}
+.wide .sv-main{color:var(--ink2)}.close .sv-main{color:var(--amber)}.exact .sv-main{color:var(--green)}.over .sv-main{color:var(--red)}
+.sv-sub{font-size:14px;color:var(--ink3);margin-top:4px}
 
 /* ── RIGHT PANEL ── */
-#rpanel{
-  display:flex;flex-direction:column;overflow:hidden;
-  background:var(--s1);
-}
-.rp-concept{
-  padding:18px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.rp-concept-lbl{
-  font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:7px;
-}
-.rp-concept-lbl::before{content:'';width:10px;height:1.5px;background:var(--green);display:block}
-.rp-concept-text{
-  font-family:var(--serif);font-style:italic;font-size:13px;
-  color:var(--text2);line-height:1.75;
-}
-.rp-concept-text strong{font-style:normal;font-family:var(--sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text)}
+#rpanel{width:320px;border-left:2px solid var(--ink);display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.rp-concept{padding:18px 20px;border-bottom:2px solid var(--ink)}
+.rp-concept .clabel{font-size:14px;font-weight:700;color:var(--green);margin-bottom:6px}
+.rp-concept p{font-size:15px;line-height:1.65;color:var(--ink2)}
+.rp-concept p strong{font-weight:700;color:var(--ink)}
+.rp-scroll{flex:1;overflow-y:auto;padding:16px 20px}
 
-.rp-scroll{flex:1;overflow-y:auto;padding:16px 20px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
-
-/* Factor decomposition */
 .factor-section{margin-bottom:18px}
-.factor-title{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
-.factor-grid{display:flex;flex-wrap:wrap;gap:6px}
+.factor-title{font-size:14px;font-weight:700;color:var(--ink3);margin-bottom:8px}
+.factor-grid{display:flex;flex-wrap:wrap;gap:8px}
 .factor-chip{
-  padding:5px 12px;border-radius:20px;border:1px solid;
-  font-family:var(--mono);font-size:13px;font-weight:700;
+  padding:8px 14px;border-radius:24px;border:2px solid;
+  font-family:var(--mono);font-size:16px;font-weight:700;
 }
-
-/* Root assembly */
 .root-section{margin-bottom:18px}
 .root-display{
-  display:flex;align-items:center;flex-wrap:wrap;gap:5px;
-  padding:12px 14px;border:1px solid var(--border2);border-radius:8px;
-  background:var(--s2);min-height:52px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px;
+  padding:16px;border:var(--border);border-radius:var(--radius);
+  background:var(--card);min-height:56px;
 }
-.rd-label{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-right:4px}
-.rd-bubble{
-  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:14px;font-weight:700;
-}
-.rd-op{font-family:var(--mono);font-size:16px;color:var(--text3)}
-.rd-result{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--green);margin-left:4px;text-shadow:0 0 12px var(--green-glow)}
+.rd-label{font-size:15px;font-weight:600;color:var(--ink3);margin-right:4px}
+.rd-bubble{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:16px;font-weight:700}
+.rd-op{font-family:var(--mono);font-size:18px;color:var(--ink3)}
+.rd-result{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--green);margin-left:4px}
 
-/* Verdict card */
-.verdict-card{
-  padding:14px 16px;border-radius:8px;border:1px solid;text-align:center;
-  transition:all .3s;margin-bottom:12px;
-}
-.verdict-card.pending{background:var(--s2);border-color:var(--border)}
-.verdict-card.success{background:var(--green-dim);border-color:rgba(45,222,152,0.3)}
-.verdict-card.fail{background:var(--red-dim);border-color:rgba(255,79,94,0.25)}
-.vc-main{font-family:var(--mono);font-size:20px;font-weight:700}
-.pending .vc-main{color:var(--text3)}
-.success .vc-main{color:var(--green);text-shadow:0 0 12px var(--green-glow)}
+.verdict-card{padding:16px 20px;border-radius:var(--radius);border:var(--border);text-align:center;transition:all .3s;margin-bottom:16px}
+.verdict-card.pending{background:var(--card)}
+.verdict-card.success{background:var(--green-bg);border-color:var(--green)}
+.verdict-card.fail{background:var(--red-bg);border-color:var(--red)}
+.vc-main{font-family:var(--mono);font-size:22px;font-weight:700}
+.pending .vc-main{color:var(--ink3)}
+.success .vc-main{color:var(--green)}
 .fail .vc-main{color:var(--red)}
-.vc-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:.5px}
+.vc-sub{font-size:14px;color:var(--ink3);margin-top:4px}
 
-/* insight */
-.insight-box{
-  padding:12px 14px;border-radius:8px;background:var(--amber-dim);
-  border:1px solid rgba(245,166,35,0.2);
+.insight-box{padding:16px 18px;border-radius:var(--radius);background:var(--amber-bg);border:2px solid var(--amber)}
+.insight-box p{font-size:15px;line-height:1.65;color:var(--ink2)}
+.insight-box strong{font-weight:700;color:var(--amber)}
+
+@media(max-width:768px){
+  html,body{overflow:auto;height:auto}
+  #shell{height:auto;min-height:100dvh;overflow:visible}
+  .header{padding:12px 16px 8px}
+  .header h1{font-size:22px}
+  #body{flex-direction:column;overflow:visible}
+  #workbench{border-right:none;border-bottom:2px solid var(--ink);height:56vw;min-height:260px;max-height:440px}
+  #rpanel{width:100%;border-left:none;border-top:2px solid var(--ink);overflow:visible}
+  .rp-scroll{overflow:visible}
 }
-.insight-box p{font-family:var(--serif);font-style:italic;font-size:12.5px;color:rgba(245,166,35,0.8);line-height:1.7}
-.insight-box strong{font-style:normal;font-family:var(--sans);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--amber)}
-
-/* grain */
-#grain{position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.02;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-
-/* ══ MOBILE / TABLET ══════════════════════════════ */
-@media (max-width: 768px) {
-  html, body { overflow: auto; height: auto; }
-  #shell { position: static; display: flex; flex-direction: column; min-height: 100dvh; }
-  #topbar {
-    flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px;
-  }
-  .tb-title { font-size: 17px; }
-  .presets-wrap { order: 3; width: 100%; flex-wrap: wrap; }
-  .tb-num-wrap { order: 2; margin-left: auto; }
-  #body { grid-template-columns: 1fr; overflow: visible; }
-  #workbench {
-    border-right: none; border-bottom: 1px solid var(--border);
-    height: 56vw; min-height: 260px; max-height: 440px; flex-shrink: 0;
-  }
-  #rpanel { overflow: visible; }
-  .rp-scroll { overflow: visible; }
-  #pair-wrap { position: relative; overflow: hidden; }
-  #squeeze-wrap { padding: 16px 16px 12px; gap: 12px; }
-  .sq-sliders { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .sc-val { font-size: 22px; }
-  .vc-main { font-size: 17px; }
-  .rd-result { font-size: 20px; }
-  .rp-concept-text { font-size: 13px; }
-  .insight-box p { font-size: 12px; }
-  .factor-chip { font-size: 12px; padding: 4px 10px; }
+@media(max-width:480px){
+  .presets{display:none}
+  .sc-val{font-size:26px}
+  .sq-sliders{grid-template-columns:1fr}
 }
-@media (max-width: 480px) {
-  .tb-title { font-size: 15px; }
-  .preset-btn { padding: 3px 7px; font-size: 10px; }
-  #tb-num-input { width: 90px; font-size: 16px; }
-  .sc-val { font-size: 20px; }
-  .sq-sliders { grid-template-columns: 1fr; }
-  .vc-main { font-size: 15px; }
-}
-
 </style>
 </head>
 <body>
-<div id="grain"></div>
 <div id="shell">
-
-  <!-- TOPBAR -->
-  <div id="topbar">
-    <div class="tb-pill">Ch·1</div>
-    <div class="tb-title">Square <em>Root</em> Finder</div>
-    <div class="tb-spacer"></div>
-    <div class="presets-wrap">
-      <span style="font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3)">Try:</span>
+  <div class="header">
+    <span class="tag">Ch 1</span>
+    <h1>Square Root Finder</h1>
+    <div class="spacer"></div>
+    <div class="presets">
       <button class="preset-btn" data-n="324">324</button>
       <button class="preset-btn" data-n="576">576</button>
       <button class="preset-btn" data-n="1156">1156</button>
       <button class="preset-btn" data-n="156">156</button>
       <button class="preset-btn" data-n="2800">2800</button>
     </div>
-    <div class="tb-num-wrap">
-      <span class="tb-num-label">n =</span>
+    <div class="num-wrap">
+      <label>n =</label>
       <input type="number" id="tb-num-input" value="324" min="1" max="9999">
       <button class="go-btn" id="go-btn">Find √</button>
     </div>
   </div>
-
-  <!-- BODY -->
   <div id="body">
-
-    <!-- WORKBENCH -->
     <div id="workbench">
       <div class="wb-header">
-        <div class="wb-tab-strip">
+        <div class="wb-tabs">
           <button class="wb-tab on" data-wb="pair">Pair Factors</button>
           <button class="wb-tab" data-wb="squeeze">Squeeze Interval</button>
         </div>
-        <button class="reset-tiny" id="reset-btn">↺ reset</button>
+        <button class="reset-btn" id="reset-btn">Reset</button>
       </div>
-
-      <!-- PAIR PANE -->
       <div class="wb-pane on" id="pane-pair">
         <div id="pair-wrap">
           <canvas id="pair-canvas"></canvas>
           <div class="pair-hint">Drag matching bubbles together to pair them</div>
         </div>
       </div>
-
-      <!-- SQUEEZE PANE -->
       <div class="wb-pane" id="pane-squeeze">
         <div id="squeeze-wrap">
           <canvas id="squeeze-canvas" height="130"></canvas>
@@ -317,13 +210,13 @@ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='htt
               <div class="sc-label">Lower bound</div>
               <div class="sc-val" id="lo-val">1</div>
               <div class="sc-sq" id="lo-sq">1² = 1</div>
-              <input type="range" class="sc-range lo" id="lo-slider" min="0" max="100" value="1">
+              <input type="range" class="sc-range" id="lo-slider" min="0" max="100" value="1">
             </div>
             <div class="sq-slider-card hi">
               <div class="sc-label">Upper bound</div>
               <div class="sc-val" id="hi-val">100</div>
               <div class="sc-sq" id="hi-sq">100² = 10000</div>
-              <input type="range" class="sc-range hi" id="hi-slider" min="1" max="101" value="100">
+              <input type="range" class="sc-range" id="hi-slider" min="1" max="101" value="100">
             </div>
           </div>
           <div class="squeeze-verdict wide" id="squeeze-verdict">
@@ -333,571 +226,276 @@ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='htt
         </div>
       </div>
     </div>
-
-    <!-- RIGHT PANEL -->
     <div id="rpanel">
       <div class="rp-concept">
-        <div class="rp-concept-lbl" id="rp-lbl">The pairing method</div>
-        <div class="rp-concept-text" id="rp-text">
-          Every prime factor of a perfect square appears an <strong>even</strong> number of times. Drag matching bubbles onto each other — each <strong>pair</strong> contributes one factor to the root.
-        </div>
+        <div class="clabel" id="rp-lbl">The pairing method</div>
+        <p id="rp-text">Every prime factor of a perfect square appears an <strong>even</strong> number of times. Drag matching bubbles onto each other — each <strong>pair</strong> contributes one factor to the root.</p>
       </div>
-
       <div class="rp-scroll">
         <div class="factor-section">
           <div class="factor-title">Prime factorisation</div>
           <div class="factor-grid" id="factor-grid"></div>
         </div>
-
         <div class="root-section">
           <div class="factor-title">Root assembly</div>
           <div class="root-display" id="root-display">
             <span class="rd-label">√n =</span>
-            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">pair factors to see…</span>
+            <span style="font-size:14px;color:var(--ink3)">pair factors to see…</span>
           </div>
         </div>
-
         <div class="verdict-card pending" id="verdict-card">
           <div class="vc-main" id="vc-main">—</div>
           <div class="vc-sub" id="vc-sub">Pair all factors to determine the root</div>
         </div>
-
         <div class="insight-box">
           <p><strong>Why pairing works</strong><br>
-          √(a²·b²·c²…) = a·b·c… Every pair becomes a single factor outside the root. A leftover unpaired prime means the number isn't a perfect square.</p>
+          √(a²·b²·c²…) = a·b·c… Every pair becomes a single factor outside the root. A leftover unpaired prime means it's not a perfect square.</p>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-// PALETTE
-// ═══════════════════════════════════════════
-const BUBBLE_COLORS = [
-  '#2dde98','#5b9af6','#f5a623','#e879f9',
-  '#38bdf8','#fb923c','#a78bfa','#34d399',
-];
-const BUBBLE_TEXT = ['#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f','#0a0c0f'];
+const BUBBLE_COLORS=['#1a9e5a','#2d7dd2','#d4920a','#c44dbb','#e8604c','#3d8fd6','#7c5cbf','#d47a0a'];
+function hexForPrime(p,primes){return BUBBLE_COLORS[primes.indexOf(p)%BUBBLE_COLORS.length]}
 
-function hexForPrime(p, primes) {
-  const idx = primes.indexOf(p);
-  return BUBBLE_COLORS[idx % BUBBLE_COLORS.length];
-}
+let currentN=324,activeWb='pair',bubbles=[],pairedGroups=[],dragging=null,sqzLo=1,sqzHi=100;
 
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
-let currentN = 324;
-let activeWb = 'pair';
-let bubbles = [], pairedGroups = [], dragging = null;
-let sqzLo = 1, sqzHi = 100;
+function primeFactors(n){const f=[];let d=2;while(n>1){while(n%d===0){f.push(d);n=Math.floor(n/d)}d++}return f}
+function uniquePrimes(f){return[...new Set(f)].sort((a,b)=>a-b)}
 
-// ═══════════════════════════════════════════
-// PRIME FACTORISATION
-// ═══════════════════════════════════════════
-function primeFactors(n) {
-  const f=[]; let d=2;
-  while(n>1){while(n%d===0){f.push(d);n=Math.floor(n/d);}d++;}
-  return f;
-}
-function uniquePrimes(factors) {
-  return [...new Set(factors)].sort((a,b)=>a-b);
-}
-
-// ═══════════════════════════════════════════
-// NUMBER INPUT
-// ═══════════════════════════════════════════
-function setN(n) {
-  if(n<1||n>9999)return;
-  currentN=n;
-  document.getElementById('tb-num-input').value=n;
-  initPair();
-  initSqueeze();
-  updateFactorPanel();
-}
-
+function setN(n){if(n<1||n>9999)return;currentN=n;document.getElementById('tb-num-input').value=n;initPair();initSqueeze();updateFactorPanel()}
 document.getElementById('go-btn').addEventListener('click',()=>setN(+document.getElementById('tb-num-input').value));
-document.getElementById('tb-num-input').addEventListener('keydown',e=>{ if(e.key==='Enter') setN(+e.target.value); });
+document.getElementById('tb-num-input').addEventListener('keydown',e=>{if(e.key==='Enter')setN(+e.target.value)});
 document.querySelectorAll('.preset-btn').forEach(b=>b.addEventListener('click',()=>setN(+b.dataset.n)));
-document.getElementById('reset-btn').addEventListener('click',()=>{ if(activeWb==='pair')initPair(); else initSqueeze(); });
+document.getElementById('reset-btn').addEventListener('click',()=>{if(activeWb==='pair')initPair();else initSqueeze()});
 
-// ═══════════════════════════════════════════
-// WORKBENCH TABS
-// ═══════════════════════════════════════════
 document.querySelectorAll('.wb-tab').forEach(b=>b.addEventListener('click',()=>{
   activeWb=b.dataset.wb;
   document.querySelectorAll('.wb-tab').forEach(t=>t.classList.toggle('on',t===b));
   document.querySelectorAll('.wb-pane').forEach(p=>p.classList.toggle('on',p.id==='pane-'+activeWb));
-  updateConceptPanel();
+  const lbl=document.getElementById('rp-lbl'),txt=document.getElementById('rp-text');
+  if(activeWb==='pair'){lbl.textContent='The pairing method';txt.innerHTML='Every prime factor of a perfect square appears an <strong>even</strong> number of times. Drag matching bubbles onto each other — each <strong>pair</strong> contributes one factor to the root.';}
+  else{lbl.textContent='The squeezing method';txt.innerHTML='√n lies between two consecutive whole numbers. Move the bounds inward — when lo² < n < hi², the root is <strong>trapped</strong>. Close the gap to 1.';}
 }));
 
-function updateConceptPanel(){
-  const lbl=document.getElementById('rp-lbl');
-  const txt=document.getElementById('rp-text');
-  if(activeWb==='pair'){
-    lbl.textContent='The pairing method';
-    txt.innerHTML='Every prime factor of a perfect square appears an <strong>even</strong> number of times. Drag matching bubbles onto each other — each <strong>pair</strong> contributes one factor to the root.';
-  } else {
-    lbl.textContent='The squeezing method';
-    txt.innerHTML='√n lies between two consecutive whole numbers. Move the bounds inward — when lo² &lt; n &lt; hi², the root is <strong>trapped</strong>. Closing the gap by 1 gives its exact position.';
-  }
-}
-
-// ═══════════════════════════════════════════
-// PAIR TAB
-// ═══════════════════════════════════════════
-const pairCanvas=document.getElementById('pair-canvas');
-const pctx=pairCanvas.getContext('2d');
-const PR=Math.min(devicePixelRatio||1,2);
-const BR=28, SNAP=68;
+// ═══ PAIR TAB ═══
+const pairCanvas=document.getElementById('pair-canvas');const pctx=pairCanvas.getContext('2d');
+const PR=Math.min(devicePixelRatio||1,2);const BR=32,SNAP=72;
 
 function initPair(){
-  const factors=primeFactors(currentN);
-  const counts={};
+  const factors=primeFactors(currentN);const counts={};
   factors.forEach(f=>counts[f]=(counts[f]||0)+1);
   const primes=uniquePrimes(factors);
-  bubbles=[]; pairedGroups=[]; dragging=null;
-
+  bubbles=[];pairedGroups=[];dragging=null;
   const wrap=document.getElementById('pair-wrap');
-  const W=wrap.clientWidth||500;
-  const H=wrap.clientHeight||400;
-  const GAP_X=BR*2+18, GAP_Y=BR*2+24;
-  const PAD_X=40, PAD_Y=50;
+  const W=wrap.clientWidth||500,H=wrap.clientHeight||400;
+  const GAP_X=BR*2+20,GAP_Y=BR*2+28;const PAD_X=44,PAD_Y=54;
   const cols=Math.max(1,Math.min(factors.length,Math.floor((W-PAD_X*2)/GAP_X)));
   let idx=0,ci=0;
-
   primes.forEach(p=>{
     const col=BUBBLE_COLORS[ci%BUBBLE_COLORS.length];
     for(let k=0;k<counts[p];k++){
-      bubbles.push({
-        id:idx,prime:p,color:col,
-        x:PAD_X+BR+(idx%cols)*GAP_X,
-        y:PAD_Y+BR+Math.floor(idx/cols)*GAP_Y,
-        homeX:PAD_X+BR+(idx%cols)*GAP_X,
-        homeY:PAD_Y+BR+Math.floor(idx/cols)*GAP_Y,
-        paired:false,pairedWith:null,unpairable:false,shake:0,
-      });
+      bubbles.push({id:idx,prime:p,color:col,
+        x:PAD_X+BR+(idx%cols)*GAP_X,y:PAD_Y+BR+Math.floor(idx/cols)*GAP_Y,
+        homeX:PAD_X+BR+(idx%cols)*GAP_X,homeY:PAD_Y+BR+Math.floor(idx/cols)*GAP_Y,
+        paired:false,pairedWith:null,unpairable:false,shake:0});
       idx++;
     }
     ci++;
   });
-
-  resizePair();
-  updateFactorPanel();
-  updateVerdictCard();
-  drawPair();
+  resizePair();updateFactorPanel();updateVerdictCard();drawPair();
 }
 
-function resizePair(){
-  const wrap=document.getElementById('pair-wrap');
-  pairCanvas.width=wrap.clientWidth*PR;
-  pairCanvas.height=wrap.clientHeight*PR;
-  pairCanvas.style.width=wrap.clientWidth+'px';
-  pairCanvas.style.height=wrap.clientHeight+'px';
-  pctx.resetTransform();pctx.scale(PR,PR);
-}
+function resizePair(){const wrap=document.getElementById('pair-wrap');pairCanvas.width=wrap.clientWidth*PR;pairCanvas.height=wrap.clientHeight*PR;pairCanvas.style.width=wrap.clientWidth+'px';pairCanvas.style.height=wrap.clientHeight+'px';pctx.resetTransform();pctx.scale(PR,PR)}
 
 function drawPair(){
-  const W=pairCanvas.clientWidth, H=pairCanvas.clientHeight;
+  const W=pairCanvas.clientWidth,H=pairCanvas.clientHeight;
   pctx.clearRect(0,0,W,H);
-
-  // Dark grid dots
-  pctx.fillStyle='rgba(255,255,255,0.03)';
-  for(let x=20;x<W;x+=28) for(let y=20;y<H;y+=28) { pctx.beginPath();pctx.arc(x,y,1,0,Math.PI*2);pctx.fill(); }
-
-  // Pair connection arcs
+  // Light dot grid
+  pctx.fillStyle='rgba(0,0,0,0.04)';
+  for(let x=20;x<W;x+=28)for(let y=20;y<H;y+=28){pctx.beginPath();pctx.arc(x,y,1.2,0,Math.PI*2);pctx.fill()}
+  // Pair arcs
   pairedGroups.forEach(g=>{
     if(g.bubbleIds.length!==2)return;
-    const b1=bubbles.find(b=>b.id===g.bubbleIds[0]);
-    const b2=bubbles.find(b=>b.id===g.bubbleIds[1]);
+    const b1=bubbles.find(b=>b.id===g.bubbleIds[0]),b2=bubbles.find(b=>b.id===g.bubbleIds[1]);
     if(!b1||!b2)return;
-    pctx.beginPath();
-    const mx=(b1.x+b2.x)/2, my=(b1.y+b2.y)/2-18;
-    pctx.moveTo(b1.x,b1.y);
-    pctx.quadraticCurveTo(mx,my,b2.x,b2.y);
-    pctx.strokeStyle=g.color+'55';pctx.lineWidth=2.5;
-    pctx.setLineDash([4,4]);pctx.stroke();pctx.setLineDash([]);
+    pctx.beginPath();pctx.moveTo(b1.x,b1.y);pctx.quadraticCurveTo((b1.x+b2.x)/2,(b1.y+b2.y)/2-18,b2.x,b2.y);
+    pctx.strokeStyle=g.color+'55';pctx.lineWidth=2.5;pctx.setLineDash([4,4]);pctx.stroke();pctx.setLineDash([]);
   });
-
   // Snap halo
   if(dragging!==null){
     const db=bubbles.find(b=>b.id===dragging.id);
-    if(db) bubbles.forEach(b=>{
+    if(db)bubbles.forEach(b=>{
       if(b.paired||b.id===db.id||b.prime!==db.prime)return;
-      const d=Math.hypot(db.x-b.x,db.y-b.y);
-      if(d<SNAP){
-        pctx.beginPath();pctx.arc(b.x,b.y,BR+10,0,Math.PI*2);
-        pctx.fillStyle=b.color+'20';pctx.fill();
-        pctx.strokeStyle=b.color;pctx.lineWidth=2;pctx.stroke();
+      if(Math.hypot(db.x-b.x,db.y-b.y)<SNAP){
+        pctx.beginPath();pctx.arc(b.x,b.y,BR+12,0,Math.PI*2);
+        pctx.fillStyle=b.color+'20';pctx.fill();pctx.strokeStyle=b.color;pctx.lineWidth=2.5;pctx.stroke();
       }
     });
   }
-
-  // Draw all bubbles (dragged on top)
-  bubbles.forEach(b=>{ if(!dragging||b.id!==dragging.id) drawBubble(b); });
-  if(dragging){ const db=bubbles.find(b=>b.id===dragging.id);if(db)drawBubble(db,true); }
+  bubbles.forEach(b=>{if(!dragging||b.id!==dragging.id)drawBubble(b)});
+  if(dragging){const db=bubbles.find(b=>b.id===dragging.id);if(db)drawBubble(db,true)}
 }
 
 function drawBubble(b,lifted=false){
-  const ox=b.shake>0?Math.sin(b.shake*.9)*5:0;
-  const x=b.x+ox, y=b.y;
-
-  if(lifted){ pctx.shadowColor='rgba(0,0,0,0.5)';pctx.shadowBlur=20;pctx.shadowOffsetY=8; }
-
-  // Glow ring for paired
-  if(b.paired){
-    pctx.beginPath();pctx.arc(x,y,BR+6,0,Math.PI*2);
-    pctx.strokeStyle=b.color+'60';pctx.lineWidth=2;
-    pctx.setLineDash([3,3]);pctx.stroke();pctx.setLineDash([]);
-  }
-
+  const ox=b.shake>0?Math.sin(b.shake*.9)*5:0;const x=b.x+ox,y=b.y;
+  if(lifted){pctx.shadowColor='rgba(0,0,0,0.3)';pctx.shadowBlur=16;pctx.shadowOffsetY=6}
+  if(b.paired){pctx.beginPath();pctx.arc(x,y,BR+7,0,Math.PI*2);pctx.strokeStyle=b.color+'60';pctx.lineWidth=2.5;pctx.setLineDash([3,3]);pctx.stroke();pctx.setLineDash([])}
   // Body
-  const grad=pctx.createRadialGradient(x-BR*.25,y-BR*.25,0,x,y,BR);
-  grad.addColorStop(0,b.unpairable?'#ff4f5e':lifted?lighten(b.color,.15):b.color);
-  grad.addColorStop(1,b.unpairable?'#cc1a28':darken(b.color,.3));
   pctx.beginPath();pctx.arc(x,y,BR,0,Math.PI*2);
-  pctx.fillStyle=grad;pctx.fill();
-
+  pctx.fillStyle=b.unpairable?'#d94040':b.color;pctx.fill();
+  // Thick border
+  pctx.strokeStyle='rgba(0,0,0,0.2)';pctx.lineWidth=2.5;pctx.stroke();
   pctx.shadowColor='transparent';pctx.shadowBlur=0;pctx.shadowOffsetY=0;
-
-  // Top highlight
-  pctx.beginPath();pctx.arc(x-BR*.2,y-BR*.25,BR*.45,0,Math.PI*2);
-  pctx.fillStyle='rgba(255,255,255,0.12)';pctx.fill();
-
   // Label
-  pctx.font=`700 ${BR>24?18:14}px Space Mono,monospace`;
-  pctx.fillStyle=b.unpairable?'#fff':'rgba(10,12,15,0.9)';
-  pctx.textAlign='center';pctx.textBaseline='middle';
+  pctx.font='700 '+(BR>28?20:16)+'px DM Mono,monospace';
+  pctx.fillStyle='#fff';pctx.textAlign='center';pctx.textBaseline='middle';
   pctx.fillText(b.prime,x,y);
-
-  // ✓ badge if paired
-  if(b.paired){
-    pctx.beginPath();pctx.arc(x+BR*.65,y-BR*.65,8,0,Math.PI*2);
-    pctx.fillStyle=b.color;pctx.fill();
-    pctx.font='700 9px Space Mono';pctx.fillStyle='rgba(10,12,15,0.9)';
-    pctx.textAlign='center';pctx.textBaseline='middle';
-    pctx.fillText('✓',x+BR*.65,y-BR*.65);
-  }
-  // ✗ if unpairable
-  if(b.unpairable){
-    pctx.strokeStyle='rgba(255,255,255,.9)';pctx.lineWidth=2.5;pctx.lineCap='round';
-    const s=8;
-    pctx.beginPath();pctx.moveTo(x-s,y+s);pctx.lineTo(x+s,y-s);pctx.stroke();
-    pctx.beginPath();pctx.moveTo(x+s,y+s);pctx.lineTo(x-s,y-s);pctx.stroke();
-  }
+  if(b.paired){pctx.beginPath();pctx.arc(x+BR*.65,y-BR*.65,10,0,Math.PI*2);pctx.fillStyle=b.color;pctx.fill();pctx.strokeStyle='#fff';pctx.lineWidth=1.5;pctx.stroke();pctx.font='700 11px DM Sans';pctx.fillStyle='#fff';pctx.fillText('✓',x+BR*.65,y-BR*.65)}
+  if(b.unpairable){pctx.strokeStyle='#fff';pctx.lineWidth=3;pctx.lineCap='round';const s=10;pctx.beginPath();pctx.moveTo(x-s,y+s);pctx.lineTo(x+s,y-s);pctx.stroke();pctx.beginPath();pctx.moveTo(x+s,y+s);pctx.lineTo(x-s,y-s);pctx.stroke()}
 }
 
-function lighten(hex,amt){ return hex }
-function darken(hex,amt){
-  let n=parseInt(hex.slice(1),16);
-  let r=Math.max(0,((n>>16)&255)-Math.round(amt*255));
-  let g=Math.max(0,((n>>8)&255)-Math.round(amt*255));
-  let b=Math.max(0,(n&255)-Math.round(amt*255));
-  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
-}
-
-// Pointer events
 pairCanvas.addEventListener('pointerdown',e=>{
-  const r=pairCanvas.getBoundingClientRect();
-  const mx=e.clientX-r.left, my=e.clientY-r.top;
+  const r=pairCanvas.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
   for(let i=bubbles.length-1;i>=0;i--){
-    const b=bubbles[i];
-    if(b.unpairable)continue;
+    const b=bubbles[i];if(b.unpairable)continue;
     if(Math.hypot(mx-b.x,my-b.y)<BR){
-      dragging={id:b.id,ox:mx-b.x,oy:my-b.y};
-      pairCanvas.setPointerCapture(e.pointerId);
-      if(b.paired){
-        const gi=pairedGroups.findIndex(g=>g.bubbleIds.includes(b.id));
-        if(gi>=0){
-          pairedGroups[gi].bubbleIds.forEach(bid=>{
-            const bb=bubbles.find(x=>x.id===bid);
-            if(bb){bb.paired=false;bb.pairedWith=null;}
-          });
-          pairedGroups.splice(gi,1);
-          updateVerdictCard();
-        }
-      }
+      dragging={id:b.id,ox:mx-b.x,oy:my-b.y};pairCanvas.setPointerCapture(e.pointerId);
+      if(b.paired){const gi=pairedGroups.findIndex(g=>g.bubbleIds.includes(b.id));if(gi>=0){pairedGroups[gi].bubbleIds.forEach(bid=>{const bb=bubbles.find(x=>x.id===bid);if(bb){bb.paired=false;bb.pairedWith=null}});pairedGroups.splice(gi,1);updateVerdictCard()}}
       break;
     }
   }
 });
-pairCanvas.addEventListener('pointermove',e=>{
-  if(dragging===null)return;
-  const r=pairCanvas.getBoundingClientRect();
-  const b=bubbles.find(x=>x.id===dragging.id);
-  if(b){b.x=e.clientX-r.left-dragging.ox;b.y=e.clientY-r.top-dragging.oy;}
-  drawPair();
-});
+pairCanvas.addEventListener('pointermove',e=>{if(dragging===null)return;const r=pairCanvas.getBoundingClientRect();const b=bubbles.find(x=>x.id===dragging.id);if(b){b.x=e.clientX-r.left-dragging.ox;b.y=e.clientY-r.top-dragging.oy}drawPair()});
 pairCanvas.addEventListener('pointerup',()=>{
-  if(dragging===null)return;
-  const db=bubbles.find(b=>b.id===dragging.id);
+  if(dragging===null)return;const db=bubbles.find(b=>b.id===dragging.id);
   if(db){
     let snapped=false;
     for(const t of bubbles){
       if(t.id===db.id||t.paired||t.prime!==db.prime)continue;
       if(Math.hypot(db.x-t.x,db.y-t.y)<SNAP){
-        const mx=(db.x+t.x)/2, my=(db.y+t.y)/2;
-        db.x=mx-BR-3;db.y=my;
-        t.x=mx+BR+3;t.y=my;
+        const mx=(db.x+t.x)/2,my=(db.y+t.y)/2;
+        db.x=mx-BR-3;db.y=my;t.x=mx+BR+3;t.y=my;
         db.paired=true;t.paired=true;
         pairedGroups.push({prime:db.prime,color:db.color,bubbleIds:[db.id,t.id]});
-        snapped=true;
-        let f=0;const anim=()=>{f++;drawPair();if(f<6)requestAnimationFrame(anim);};
-        requestAnimationFrame(anim);
-        break;
+        snapped=true;break;
       }
     }
     if(!snapped&&!db.paired){
       const canPair=bubbles.some(b=>b.id!==db.id&&!b.paired&&b.prime===db.prime);
-      if(!canPair){
-        db.shake=18;
-        const shake=id=>{
-          const b=bubbles.find(x=>x.id===id);
-          if(!b||b.shake<=0)return;
-          b.shake--;drawPair();
-          if(b.shake>0)requestAnimationFrame(()=>shake(id));
-          else{b.unpairable=true;drawPair();}
-        };
-        shake(db.id);
-      } else {
-        // Snap back home
-        db.x=db.homeX;db.y=db.homeY;
-      }
+      if(!canPair){db.shake=18;const shake=id=>{const b=bubbles.find(x=>x.id===id);if(!b||b.shake<=0)return;b.shake--;drawPair();if(b.shake>0)requestAnimationFrame(()=>shake(id));else{b.unpairable=true;drawPair()}};shake(db.id)}
+      else{db.x=db.homeX;db.y=db.homeY}
     }
   }
-  dragging=null;
-  updateVerdictCard();
-  drawPair();
+  dragging=null;updateVerdictCard();drawPair();
 });
 
-// Factor panel
 function updateFactorPanel(){
-  const factors=primeFactors(currentN);
-  const counts={};
-  factors.forEach(f=>counts[f]=(counts[f]||0)+1);
-  const primes=uniquePrimes(factors);
-  const grid=document.getElementById('factor-grid');
-  grid.innerHTML='';
+  const factors=primeFactors(currentN);const counts={};
+  factors.forEach(f=>counts[f]=(counts[f]||0)+1);const primes=uniquePrimes(factors);
+  const grid=document.getElementById('factor-grid');grid.innerHTML='';
   let idx=0;
   primes.forEach(p=>{
     const col=BUBBLE_COLORS[idx%BUBBLE_COLORS.length];
-    const chip=document.createElement('div');
-    chip.className='factor-chip';
-    chip.style.background=col+'18';
-    chip.style.borderColor=col+'50';
-    chip.style.color=col;
-    chip.textContent=`${p}${counts[p]>1?`^${counts[p]}`:''}`;
-    grid.appendChild(chip);
-    idx++;
+    const chip=document.createElement('div');chip.className='factor-chip';
+    chip.style.background=col+'18';chip.style.borderColor=col;chip.style.color=col;
+    chip.textContent=p+(counts[p]>1?'^'+counts[p]:'');
+    grid.appendChild(chip);idx++;
   });
-  const n=document.createElement('div');
-  n.className='factor-chip';
-  n.style.cssText='background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:rgba(221,228,238,0.5);font-size:11px';
-  n.textContent=`= ${currentN}`;
-  grid.appendChild(n);
+  const eq=document.createElement('div');eq.className='factor-chip';
+  eq.style.cssText='background:var(--card);border-color:#ccc;color:var(--ink2)';
+  eq.textContent='= '+currentN;grid.appendChild(eq);
 }
 
 function updateVerdictCard(){
-  // Mark unpairable
-  bubbles.forEach(b=>{
-    if(!b.paired){
-      b.unpairable=!bubbles.some(bb=>bb.id!==b.id&&!bb.paired&&bb.prime===b.prime);
-    } else b.unpairable=false;
-  });
-
+  bubbles.forEach(b=>{if(!b.paired){b.unpairable=!bubbles.some(bb=>bb.id!==b.id&&!bb.paired&&bb.prime===b.prime)}else b.unpairable=false});
   const rootFactors=pairedGroups.map(g=>g.prime);
   const unpairedLeft=bubbles.filter(b=>!b.paired&&b.unpairable);
   const allDone=bubbles.every(b=>b.paired||b.unpairable);
-
-  // Root display
   const rd=document.getElementById('root-display');
-  if(rootFactors.length===0){
-    rd.innerHTML='<span class="rd-label">√n =</span><span style="font-family:var(--mono);font-size:11px;color:var(--text3)">pair factors to see…</span>';
-  } else {
+  if(rootFactors.length===0){rd.innerHTML='<span class="rd-label">√n =</span><span style="font-size:14px;color:var(--ink3)">pair factors to see…</span>'}
+  else{
     const rootVal=rootFactors.reduce((a,b)=>a*b,1);
     let html='<span class="rd-label">√n =</span>';
-    pairedGroups.forEach((g,i)=>{
-      if(i>0)html+='<span class="rd-op">×</span>';
-      html+=`<div class="rd-bubble" style="background:${g.color};color:#0a0c0f">${g.prime}</div>`;
-    });
-    if(!allDone){}
-    else if(unpairedLeft.length===0){
-      html+=`<span class="rd-op">=</span><span class="rd-result">${rootVal}</span>`;
-    }
+    pairedGroups.forEach((g,i)=>{if(i>0)html+='<span class="rd-op">×</span>';html+='<div class="rd-bubble" style="background:'+g.color+';color:#fff">'+g.prime+'</div>'});
+    if(allDone&&unpairedLeft.length===0)html+='<span class="rd-op">=</span><span class="rd-result">'+rootVal+'</span>';
     rd.innerHTML=html;
   }
-
-  // Verdict
-  const vc=document.getElementById('verdict-card');
-  const vcm=document.getElementById('vc-main');
-  const vcs=document.getElementById('vc-sub');
-  if(!allDone){
-    vc.className='verdict-card pending';vcm.textContent='—';
-    vcs.textContent='Pair all factors to determine the root';return;
-  }
-  if(unpairedLeft.length===0){
-    const root=rootFactors.reduce((a,b)=>a*b,1);
-    vc.className='verdict-card success';
-    vcm.textContent=`√${currentN} = ${root}`;
-    vcs.textContent='All factors paired — perfect square ✓';
-  } else {
-    vc.className='verdict-card fail';
-    const up=unpairedLeft.map(b=>b.prime);
-    vcm.textContent=`Not a perfect square`;
-    vcs.textContent=`Leftover: ${up.join(', ')} — multiply by ${up.reduce((a,b)=>a*b,1)} to fix`;
-  }
+  const vc=document.getElementById('verdict-card'),vcm=document.getElementById('vc-main'),vcs=document.getElementById('vc-sub');
+  if(!allDone){vc.className='verdict-card pending';vcm.textContent='—';vcs.textContent='Pair all factors to determine the root';return}
+  if(unpairedLeft.length===0){const root=rootFactors.reduce((a,b)=>a*b,1);vc.className='verdict-card success';vcm.textContent='√'+currentN+' = '+root;vcs.textContent='All factors paired — perfect square ✓'}
+  else{vc.className='verdict-card fail';const up=unpairedLeft.map(b=>b.prime);vcm.textContent='Not a perfect square';vcs.textContent='Leftover: '+up.join(', ')+' — multiply by '+up.reduce((a,b)=>a*b,1)+' to fix'}
 }
 
-new ResizeObserver(()=>{ resizePair();drawPair(); }).observe(document.getElementById('pair-wrap'));
+new ResizeObserver(()=>{resizePair();drawPair()}).observe(document.getElementById('pair-wrap'));
 
-// ═══════════════════════════════════════════
-// SQUEEZE TAB
-// ═══════════════════════════════════════════
-const sqzCvs=document.getElementById('squeeze-canvas');
-const sqzCtx=sqzCvs.getContext('2d');
-const SQZ_PR=Math.min(devicePixelRatio||1,2);
+// ═══ SQUEEZE ═══
+const sqzCvs=document.getElementById('squeeze-canvas');const sqzCtx=sqzCvs.getContext('2d');const SQZ_PR=PR;
 
 function initSqueeze(){
-  const sq=Math.sqrt(currentN);
-  sqzLo=1;sqzHi=Math.ceil(sq)+4;
+  const sq=Math.sqrt(currentN);sqzLo=1;sqzHi=Math.ceil(sq)+4;
   const maxV=Math.ceil(Math.sqrt(9999))+2;
-  document.getElementById('lo-slider').max=maxV-1;
-  document.getElementById('hi-slider').max=maxV;
-  document.getElementById('lo-slider').value=sqzLo;
-  document.getElementById('hi-slider').value=sqzHi;
+  document.getElementById('lo-slider').max=maxV-1;document.getElementById('hi-slider').max=maxV;
+  document.getElementById('lo-slider').value=sqzLo;document.getElementById('hi-slider').value=sqzHi;
   updateSqueeze();
 }
-
-document.getElementById('lo-slider').addEventListener('input',e=>{
-  sqzLo=+e.target.value;
-  if(sqzLo>=sqzHi)sqzLo=sqzHi-1;
-  document.getElementById('lo-slider').value=sqzLo;
-  updateSqueeze();
-});
-document.getElementById('hi-slider').addEventListener('input',e=>{
-  sqzHi=+e.target.value;
-  if(sqzHi<=sqzLo)sqzHi=sqzLo+1;
-  document.getElementById('hi-slider').value=sqzHi;
-  updateSqueeze();
-});
+document.getElementById('lo-slider').addEventListener('input',e=>{sqzLo=+e.target.value;if(sqzLo>=sqzHi)sqzLo=sqzHi-1;document.getElementById('lo-slider').value=sqzLo;updateSqueeze()});
+document.getElementById('hi-slider').addEventListener('input',e=>{sqzHi=+e.target.value;if(sqzHi<=sqzLo)sqzHi=sqzLo+1;document.getElementById('hi-slider').value=sqzHi;updateSqueeze()});
 
 function updateSqueeze(){
   const lo=sqzLo,hi=sqzHi,n=currentN,sq=Math.sqrt(n);
-  document.getElementById('lo-val').textContent=lo;
-  document.getElementById('hi-val').textContent=hi;
-  document.getElementById('lo-sq').textContent=`${lo}² = ${lo*lo}`;
-  document.getElementById('hi-sq').textContent=`${hi}² = ${hi*hi}`;
+  document.getElementById('lo-val').textContent=lo;document.getElementById('hi-val').textContent=hi;
+  document.getElementById('lo-sq').textContent=lo+'² = '+lo*lo;document.getElementById('hi-sq').textContent=hi+'² = '+hi*hi;
   drawSqueeze(lo,hi,n,sq);
-
-  const verd=document.getElementById('squeeze-verdict');
-  const vm=document.getElementById('sv-main');
-  const vs=document.getElementById('sv-sub');
-  const gap=hi-lo;
-
-  if(lo*lo===n){
-    verd.className='squeeze-verdict exact';vm.textContent=`√${n} = ${lo} exactly`;vs.textContent=`${lo}² = ${n} ✓`;
-  } else if(hi*hi===n){
-    verd.className='squeeze-verdict exact';vm.textContent=`√${n} = ${hi} exactly`;vs.textContent=`${hi}² = ${n} ✓`;
-  } else if(lo*lo>n){
-    verd.className='squeeze-verdict over';vm.textContent=`${lo}² = ${lo*lo} > ${n}`;vs.textContent='Lower bound too high — slide left';
-  } else if(hi*hi<n){
-    verd.className='squeeze-verdict over';vm.textContent=`${hi}² = ${hi*hi} < ${n}`;vs.textContent='Upper bound too low — slide right';
-  } else if(gap===1){
-    verd.className='squeeze-verdict exact';vm.textContent=`${lo} < √${n} < ${hi}  (≈${sq.toFixed(3)})`;vs.textContent=`Perfectly squeezed — gap = 1`;
-  } else if(gap<=4){
-    verd.className='squeeze-verdict close';vm.textContent=`${lo} ≤ √${n} ≤ ${hi}`;vs.textContent=`Gap = ${gap} — almost there!`;
-  } else {
-    verd.className='squeeze-verdict wide';vm.textContent=`${lo} ≤ √${n} ≤ ${hi}`;vs.textContent=`Gap = ${gap} — keep squeezing`;
-  }
+  const verd=document.getElementById('squeeze-verdict'),vm=document.getElementById('sv-main'),vs=document.getElementById('sv-sub');
+  if(lo*lo===n){verd.className='squeeze-verdict exact';vm.textContent='√'+n+' = '+lo+' exactly';vs.textContent=lo+'² = '+n+' ✓'}
+  else if(hi*hi===n){verd.className='squeeze-verdict exact';vm.textContent='√'+n+' = '+hi+' exactly';vs.textContent=hi+'² = '+n+' ✓'}
+  else if(lo*lo>n){verd.className='squeeze-verdict over';vm.textContent=lo+'² = '+lo*lo+' > '+n;vs.textContent='Lower bound too high'}
+  else if(hi*hi<n){verd.className='squeeze-verdict over';vm.textContent=hi+'² = '+hi*hi+' < '+n;vs.textContent='Upper bound too low'}
+  else if(hi-lo===1){verd.className='squeeze-verdict exact';vm.textContent=lo+' < √'+n+' < '+hi+'  (≈'+sq.toFixed(3)+')';vs.textContent='Perfectly squeezed — gap = 1'}
+  else if(hi-lo<=4){verd.className='squeeze-verdict close';vm.textContent=lo+' ≤ √'+n+' ≤ '+hi;vs.textContent='Gap = '+(hi-lo)+' — almost there!'}
+  else{verd.className='squeeze-verdict wide';vm.textContent=lo+' ≤ √'+n+' ≤ '+hi;vs.textContent='Gap = '+(hi-lo)+' — keep squeezing'}
 }
 
 function drawSqueeze(lo,hi,n,sq){
-  const wrap=document.getElementById('squeeze-wrap');
-  const W=wrap.clientWidth-48;
-  sqzCvs.style.width=W+'px';sqzCvs.style.height='130px';
-  sqzCvs.width=W*SQZ_PR;sqzCvs.height=130*SQZ_PR;
-  const ctx=sqzCtx;
-  ctx.resetTransform();ctx.scale(SQZ_PR,SQZ_PR);
-  ctx.clearRect(0,0,W,130);
-  ctx.fillStyle='#141820';ctx.fillRect(0,0,W,130);
-
-  const PAD=48,cW=W-2*PAD;
-  const vLo=Math.max(0,lo-2),vHi=hi+2;
-  const px=v=>PAD+(v-vLo)/(vHi-vLo)*cW;
-  const midY=65;
-
+  const wrap=document.getElementById('squeeze-wrap');const W=wrap.clientWidth-48;
+  sqzCvs.style.width=W+'px';sqzCvs.style.height='130px';sqzCvs.width=W*SQZ_PR;sqzCvs.height=130*SQZ_PR;
+  const ctx=sqzCtx;ctx.resetTransform();ctx.scale(SQZ_PR,SQZ_PR);ctx.clearRect(0,0,W,130);
+  ctx.fillStyle='#f2efe8';ctx.fillRect(0,0,W,130);
+  const PAD=48,cW=W-2*PAD;const vLo=Math.max(0,lo-2),vHi=hi+2;
+  const px=v=>PAD+(v-vLo)/(vHi-vLo)*cW;const midY=65;
   // Interval fill
   const inRange=lo*lo<=n&&hi*hi>=n;
-  const grad=ctx.createLinearGradient(px(lo),0,px(hi),0);
-  if(inRange){
-    grad.addColorStop(0,'rgba(91,154,246,0.15)');
-    grad.addColorStop(1,'rgba(255,79,94,0.15)');
-  } else {
-    grad.addColorStop(0,'rgba(255,79,94,0.12)');
-    grad.addColorStop(1,'rgba(255,79,94,0.12)');
-  }
-  ctx.fillStyle=grad;
+  ctx.fillStyle=inRange?'rgba(26,158,90,0.12)':'rgba(217,64,64,0.1)';
   ctx.fillRect(px(lo),midY-16,px(hi)-px(lo),32);
-
   // Axis
-  ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(PAD,midY);ctx.lineTo(W-PAD,midY);ctx.stroke();
-
+  ctx.strokeStyle='rgba(0,0,0,0.15)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(PAD,midY);ctx.lineTo(W-PAD,midY);ctx.stroke();
   // Ticks
   for(let i=Math.ceil(vLo);i<=Math.floor(vHi);i++){
-    const x=px(i);
-    ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;
+    const x=px(i);ctx.strokeStyle='rgba(0,0,0,0.08)';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(x,midY-5);ctx.lineTo(x,midY+5);ctx.stroke();
-    if(vHi-vLo<=12||(i===lo||i===hi)){
-      ctx.font='bold 9px Space Mono';ctx.fillStyle='rgba(221,228,238,0.3)';
-      ctx.textAlign='center';ctx.fillText(i,x,midY+18);
-    }
+    if(vHi-vLo<=12||(i===lo||i===hi)){ctx.font='600 12px DM Mono';ctx.fillStyle='#888';ctx.textAlign='center';ctx.fillText(i,x,midY+22)}
   }
-
-  // True √n marker
-  const sqX=px(sq);
-  ctx.strokeStyle='#2dde98';ctx.lineWidth=2;
-  ctx.setLineDash([4,3]);
-  ctx.beginPath();ctx.moveTo(sqX,midY-30);ctx.lineTo(sqX,midY+30);ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.font='bold 10px Space Mono';ctx.fillStyle='#2dde98';
-  ctx.textAlign='center';ctx.fillText('√'+n,sqX,midY-36);
-  // glow dot
-  ctx.beginPath();ctx.arc(sqX,midY,5,0,Math.PI*2);
-  ctx.fillStyle='#2dde98';
-  ctx.shadowColor='#2dde98';ctx.shadowBlur=10;ctx.fill();
-  ctx.shadowBlur=0;
-
+  // True √n
+  const sqX=px(sq);ctx.strokeStyle='#1a9e5a';ctx.lineWidth=2.5;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(sqX,midY-30);ctx.lineTo(sqX,midY+30);ctx.stroke();ctx.setLineDash([]);
+  ctx.font='700 13px DM Mono';ctx.fillStyle='#1a9e5a';ctx.textAlign='center';ctx.fillText('√'+n,sqX,midY-36);
+  ctx.beginPath();ctx.arc(sqX,midY,6,0,Math.PI*2);ctx.fillStyle='#1a9e5a';ctx.fill();
   // lo dot
-  const loX=px(lo);
-  ctx.beginPath();ctx.arc(loX,midY,10,0,Math.PI*2);
-  ctx.fillStyle='#5b9af6';ctx.fill();
-  ctx.font='bold 9px Space Mono';ctx.fillStyle='#0a0c0f';
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lo,loX,midY);
-
+  const loX=px(lo);ctx.beginPath();ctx.arc(loX,midY,12,0,Math.PI*2);ctx.fillStyle='#2d7dd2';ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  ctx.font='700 11px DM Mono';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lo,loX,midY);
   // hi dot
-  const hiX=px(hi);
-  ctx.beginPath();ctx.arc(hiX,midY,10,0,Math.PI*2);
-  ctx.fillStyle='#ff4f5e';ctx.fill();
-  ctx.fillStyle='#fff';ctx.fillText(hi,hiX,midY);
-
+  const hiX=px(hi);ctx.beginPath();ctx.arc(hiX,midY,12,0,Math.PI*2);ctx.fillStyle='#d94040';ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff';ctx.fillText(hi,hiX,midY);
   // squared labels
-  ctx.textBaseline='alphabetic';
-  ctx.font='9px Space Mono';ctx.fillStyle='rgba(91,154,246,0.7)';
-  ctx.textAlign='center';
-  if(vHi-vLo<=15)ctx.fillText(`${lo}²=${lo*lo}`,loX,midY-20);
-  ctx.fillStyle='rgba(255,79,94,0.7)';
-  if(vHi-vLo<=15)ctx.fillText(`${hi}²=${hi*hi}`,hiX,midY-20);
+  ctx.textBaseline='alphabetic';ctx.font='600 11px DM Mono';
+  if(vHi-vLo<=15){ctx.fillStyle='#2d7dd2';ctx.fillText(lo+'²='+lo*lo,loX,midY-22);ctx.fillStyle='#d94040';ctx.fillText(hi+'²='+hi*hi,hiX,midY-22)}
 }
 
-new ResizeObserver(()=>{ if(activeWb==='squeeze')updateSqueeze(); }).observe(document.getElementById('squeeze-wrap'));
-
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
+new ResizeObserver(()=>{if(activeWb==='squeeze')updateSqueeze()}).observe(document.getElementById('squeeze-wrap'));
 setN(324);
 </script>
 </body>
